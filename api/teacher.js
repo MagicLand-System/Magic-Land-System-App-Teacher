@@ -24,7 +24,7 @@ export const getAttendanceList = async (classId) => {
 export const getAttendanceListByDate = async (classId, date) => {
 
     try {
-        const response = await api.get(`/api/v1/lectures/student/attendance?classId=${classId}&date=${date}`);
+        const response = await api.get(`/api/v1/lectures/class/date/attendances?classId=${classId}&date=${date}`);
         return response;
     } catch (error) {
         console.log("getAttendanceList in api/teacher.js error : ", error);

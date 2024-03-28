@@ -8,40 +8,6 @@ import { getWorkSchedule } from '../../../api/teacher';
 import { formatTime, shortedTime } from '../../../util/util';
 import ClassCartCard from '../../../components/ClassCartCard';
 
-const dateListDefault = [
-  {
-    date: "2024-01-13T00:00:00",
-    classList: [
-      {
-        title: "Khóa Học Vẽ Cho Trẻ Mới Bắt Đầu",
-        time: "10:00-13:00",
-        room: "110",
-      },
-    ]
-  },
-  {
-    date: "2024-01-14T00:00:00",
-    classList: [
-      {
-        title: "Khóa Học Vẽ Cho Trẻ Mới Bắt Đầu",
-        time: "10:00-13:00",
-        room: "110",
-      },
-      {
-        title: "Hát cùng cô giáo nhỏ",
-        time: "10:00-13:00",
-        room: "110",
-      },
-      {
-        title: "Toán Tư Duy",
-        time: "10:00-13:00",
-        room: "110",
-      },
-    ]
-  },
-
-]
-
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
@@ -77,10 +43,11 @@ export default function WorkScheduleScreen({ navigation }) {
   }
 
   const handleClassNavigate = (classDetail) => {
-    // console.log(classDetail);
+    // console.log(classDetail);courseItem
     // navigation.push("ClassOptionScreen", { classId: classDetail?.classId, date: dateSelected, slot: classDetail?.slot?.slotOrder })
     // navigation.push("TeacherCourseSyllabus", { classId: classDetail?.classId, date: dateSelected, slot: classDetail?.slot?.slotOrder })
-    console.log(classDetail);
+    navigation.push("TeacherCourseSyllabus", { courseDetail: classDetail })
+    // console.log(classDetail);
   }
 
   const getCurrentDate = (date) => {

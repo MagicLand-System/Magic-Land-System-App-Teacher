@@ -100,7 +100,7 @@ export default function HomeScreen({ navigation }) {
             classList.map((item, key) => (
               <ClassCartCard
                 cardDetail={item}
-                index={item?.id}
+                index={key}
                 check={false}
                 priceHidden={true}
                 timeType={"onDate"}

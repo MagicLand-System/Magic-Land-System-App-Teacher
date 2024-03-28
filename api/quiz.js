@@ -12,7 +12,7 @@ export const getQuizByCourseid = async (id) => {
 
 export const getQuizByClassid = async (id, studentId) => {
 
-    const path = studentId ? `id=${id}` : `id=${id}&studentId=${studentId}`
+    const path = studentId ? `id=${id}&studentId=${studentId}` : `id=${id}`
 
     try {
         const response = await api.get(`/api/v1/exams/class?${path}`);

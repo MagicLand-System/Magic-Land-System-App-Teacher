@@ -19,7 +19,7 @@ const colorList = [
 export default function ClassCartCard({ cardDetail, check, index, onClick, background, priceHidden, timeType, buttonList }) {
 
     return (
-        <TouchableOpacity style={styles.container} onPress={() => { onClick(cardDetail?.classId) }}>
+        <TouchableOpacity style={styles.container} onPress={() => { onClick(cardDetail?.classId) }} key={index}>
             <View
                 style={{
                     ...styles.card,

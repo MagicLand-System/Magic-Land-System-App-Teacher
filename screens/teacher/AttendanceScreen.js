@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import unhappyIcon from "../../assets/rateIcon/unhapppyIcon.png"
 import happyIcon from "../../assets/rateIcon/happyIcon.png"
 import ContentedIcon from "../../assets/rateIcon/ContentedIcon.png"
-import { getAttendanceList, takeAttendance } from '../../api/teacher';
+import { getAttendanceList, getAttendanceListByDate, takeAttendance } from '../../api/teacher';
 import { checkCurrentDate } from '../../util/util';
 
 const WIDTH = Dimensions.get('window').width;
@@ -27,9 +27,10 @@ export default function AttendanceScreen({ route, navigation }) {
     }, [route.params.classDetail])
 
     const loadStudentData = async () => {
-        const response = await getAttendanceList(classDetail.classId)
-        console.log(classDetail.classId);
+        const response = await getAttendanceListByDate(classDetail.classId, date)
+        console.log(classDetail.classId, date);
         if (response?.status === 200) {
+            console.log(response.data.attendanceInformation);
             // const data = response?.data?.map((item) => {
             //     return {
             //         ...item,
@@ -39,9 +40,9 @@ export default function AttendanceScreen({ route, navigation }) {
             // setStudentList(data)
             // setStudentTmpList(data)
 
-            setStudentList(response?.data)
-            setStudentTmpList(response?.data)
-        }else{
+            setStudentList(response?.data?.attendanceInformation)
+            setStudentTmpList(response?.data?.attendanceInformation)
+        } else {
 
         }
     }
