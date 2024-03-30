@@ -57,7 +57,7 @@ export default function QuizDetailScreen({ route, navigation }) {
     }
 
     const hanldeScoreEditNavigate = () => {
-        console.log("comming soon");
+        navigation.push("ExamResultScreen", { classDetail: classInfor, date: classInfor?.date, quizData: quizData })
     }
 
     return (

@@ -77,3 +77,26 @@ export const getWorkSchedule = async () => {
         return error;
     }
 };
+
+export const getExamResult = async ({ classId, studentIdList, examIdList, isLatestAttempt }) => {
+    let path = `classId=${classId}`
+    if (studentIdList) {
+        path += "&" + `studentIdList=${studentIdList}`
+    }
+    if (examIdList) {
+        path += "&" + `examIdList=${examIdList}`
+    }
+    if (isLatestAttempt === true) {
+        path += "&" + `isLatestAttempt=${isLatestAttempt}`
+    } else {
+        path += "&" + `isLatestAttempt=false`
+    }
+
+    try {
+        const response = await api.get("/api/v1/lectures/students/get/quiz/fullyInfor?" + path);
+        return response;
+    } catch (error) {
+        console.log("getExamResult in api/teacher.js error : ", error);
+        return error;
+    }
+};
