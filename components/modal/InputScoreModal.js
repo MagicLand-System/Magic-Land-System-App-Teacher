@@ -21,22 +21,13 @@ export default function InputScoreModal({ visible, student, score, note, onCancl
     }
 
     const handleInputScore = (text) => {
-        // Ensure that the input is numeric, allowing decimals and commas
         const numericInput = text.replace(/[^0-9.,]/g, '');
-
-        // Update the tmpScore state with the sanitized input
         setTmpScore(numericInput);
-
-        // Parse the input as a float
         const inputNumber = parseFloat(numericInput);
-
-        // If the input is not a number, or is NaN, set the default score to 0
         if (isNaN(inputNumber)) {
             setTmpScore('0');
             return;
         }
-
-        // Ensure the score is within the range of 0 to 10
         if (inputNumber < 0) {
             setTmpScore('0');
         } else if (inputNumber > 10) {
