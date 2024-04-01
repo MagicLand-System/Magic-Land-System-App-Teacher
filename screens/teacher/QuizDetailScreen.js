@@ -96,11 +96,11 @@ export default function QuizDetailScreen({ route, navigation }) {
                                         <Text style={{ ...styles.boldText, color: "#241468" }}>{formatTime(quizData?.examStartTime) + " - " + formatDate(quizData?.examStartTime)}</Text>
                                     </View>
                                     <View style={{ ...styles.flexColumnBetween, marginVertical: 10 }}>
-                                        <Text style={{ ...styles.boldText, color: "#241468", marginLeft: 5 }}>Thời gian bắt đầu:</Text>
+                                        <Text style={{ ...styles.boldText, color: "#241468", marginLeft: 5 }}>Thời gian kết thúc:</Text>
                                         <Text style={{ ...styles.boldText, color: "#241468" }}>{formatTime(quizData?.examEndTime) + " - " + formatDate(quizData?.examEndTime)}</Text>
                                     </View>
                                     <View style={{ ...styles.flexColumnBetween, marginVertical: 10 }}>
-                                        <Text style={{ ...styles.boldText, color: "#241468", marginLeft: 5 }}>Thời gian bắt đầu:</Text>
+                                        <Text style={{ ...styles.boldText, color: "#241468", marginLeft: 5 }}>Thời gian làm bài:</Text>
                                         <Text style={{ ...styles.boldText, color: "#241468" }}>{quizData?.duration / 60}p</Text>
                                     </View>
                                     <View style={{ ...styles.flexColumnBetween, marginVertical: 10, marginBottom: 30 }}>
