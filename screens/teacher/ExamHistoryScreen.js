@@ -3,15 +3,27 @@ import React, { useEffect, useState } from 'react'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Header from '../../components/header/Header';
+import { useNavigation } from '@react-navigation/native';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
-export default function ExamHistoryScreen({ route, navigation }) {
+export default function ExamHistoryScreen({ route }) {
+    const navigation = useNavigation()
 
-    const quizData = route?.params?.quizData
-    // const quizHistory = route?.params?.quizHistory
-    const [quizHistory, setQuizHistory] = useState()
+    const quizData = route?.params?.quizData?.examInfors[0]
+    const studentDetail = route?.params?.quizData
+    const quizType = route?.params?.quizType
+    const quizHistory = route?.params?.quizData?.examInfors[0]?.studentWorkResult
+    console.log(route.params);
+    // const [quizHistory, setQuizHistory] = useState()
+    const goback = () => {
+        const dataToTransfer = { data: "0" };
+        navigation.setParams({ dataToTransfer: dataToTransfer });
+        console.log(route.params);
+        navigation.pop()
+    }
+
 
     const getColumnColor = (item) => {
         return item?.multipleChoiceAnswerResult?.studentAnswerId === item?.multipleChoiceAnswerResult?.correctAnswerId
@@ -19,13 +31,13 @@ export default function ExamHistoryScreen({ route, navigation }) {
 
     return (
         <>
-            <Header navigation={navigation} goback={navigation.pop} title={quizData?.quizName} />
+            <Header navigation={navigation} goback={goback} title={quizData?.quizName} />
             <ScrollView style={styles.container}>
                 <View style={styles.titleView}>
                     <Text style={styles.title}>{quizData?.quizName}</Text>
                 </View>
                 {
-                    quizData?.quizType === "multiple-choice" &&
+                    quizType === "multiple-choice" &&
                     <View style={styles.questionTable}>
                         <View style={styles.columnTable}>
                             <View style={styles.numberTable}>
@@ -92,19 +104,20 @@ export default function ExamHistoryScreen({ route, navigation }) {
 
                 <View style={{ ...styles.flexColumnBetween, width: WIDTH * 0.8, marginHorizontal: WIDTH * 0.1, marginVertical: 10 }}>
                     <Text style={styles.boldText}>Số câu đúng:</Text>
-                    <Text style={styles.boldText}>{quizData?.score / quizData?.totalScore * quizData?.totalMark} / {quizData?.totalMark}</Text>
+                    <Text style={styles.boldText}>{quizData?.correctMark} / {quizData?.totalMark}</Text>
                 </View>
                 <View style={{ ...styles.flexColumnBetween, width: WIDTH * 0.8, marginHorizontal: WIDTH * 0.1, marginVertical: 10 }}>
                     <Text style={styles.boldText}>Tổng điểm:</Text>
-                    <Text style={styles.boldText}>{quizData?.score}  điểm</Text>
+                    <Text style={styles.boldText}>{quizData?.scoreEarned} điểm</Text>
                 </View>
                 <View style={{ ...styles.flexColumnBetween, width: WIDTH * 0.8, marginHorizontal: WIDTH * 0.1, marginVertical: 10 }}>
                     <Text style={styles.boldText}>Số lần làm:</Text>
-                    <Text style={styles.boldText}>{quizData?.attemptAlloweds - quizData?.attemptLeft} lần</Text>
+                    <Text style={styles.boldText}>{quizData?.noAttemp} lần</Text>
                 </View>
 
                 <View style={styles.titleView}>
-                    <Text style={styles.title}>Đánh giá của giáo viên:</Text>
+                    <Text style={styles.title}>Đánh giá của giáo viên: </Text>
+                    <Text> {quizData?.examStatus ? quizData?.examStatus : studentDetail?.note}</Text>
                 </View>
             </ScrollView >
         </>

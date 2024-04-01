@@ -27,6 +27,12 @@ export default function ExamResultScreen({ route, navigation }) {
         loadStudentData()
     }, [route.params.classDetail])
 
+    useEffect(() => {
+        navigation.setOptions({
+            handleChangeStudentRate: handleChangeStudentRate,
+        });
+    }, [navigation]);
+
     const loadStudentData = async () => {
         const response = await getExamResult({ classId: classDetail.classId, examIdList: [quizData?.examId] })
         // console.log(classDetail.classId, [quizData?.examId]);
@@ -35,7 +41,7 @@ export default function ExamResultScreen({ route, navigation }) {
                 return {
                     ...item,
                     score: item?.examInfors[0]?.scoreEarned ? item?.examInfors[0]?.scoreEarned : 0,
-                    status: ""
+                    status: item?.examInfors[0]?.examStatus ? item?.examInfors[0]?.examStatus : "",
                 };
             });
             setStudentList(data)
@@ -54,6 +60,16 @@ export default function ExamResultScreen({ route, navigation }) {
         }
         setStudentTmpList(updateArray)
         setModalVisible({ ...modalVisible, editStudenInfor: false })
+    }
+
+    const handleChangeStudentRate = async (note) => {
+        const updateArray = JSON.parse(JSON.stringify(studentTmpList))
+        // const updateArray = [...studentList]
+        if (updateArray[focusStudentIndex]) {
+            updateArray[focusStudentIndex].status = note;
+        }
+        setStudentList(updateArray)
+        await handleCompleteAttend()
     }
 
     const handleCompleteAttend = async () => {
@@ -78,11 +94,21 @@ export default function ExamResultScreen({ route, navigation }) {
         setEdittingMode(true)
     }
 
-    const handlePressOnStudent = (index) => {
+    const handlePressOnStudent = (student) => {
+
+        const studentIndex = studentList?.findIndex(obj => obj?.studentId === student?.studentId)
         if (quizData?.quizType !== "offline") {
-            navigation.push("ExamResultScreen", { quizData: quizData })
+            if (studentList[studentIndex] && studentList[studentIndex]?.examInfors[0]) {
+                navigation.push("ExamHistoryScreen",
+                    {
+                        quizData: studentList[studentIndex],
+                        quizType: quizData.quizType,
+                        // handleChangeStudentRate: handleChangeStudentRate,
+                    }
+                )
+            }
         } else if (edittingMode) {
-            setFocusStudentIndex(index)
+            setFocusStudentIndex(studentIndex)
             setModalVisible({ ...modalVisible, editStudenInfor: true })
         }
     }
@@ -120,7 +146,7 @@ export default function ExamResultScreen({ route, navigation }) {
                                 filterByStudentName((edittingMode ? studentTmpList : studentList), searchValue).map((item, index) => {
                                     return (
                                         <TouchableOpacity
-                                            onPress={() => handlePressOnStudent(index)}
+                                            onPress={() => handlePressOnStudent(item)}
                                             style={{ ...styles.tableColumn, borderBottomWidth: 1, borderColor: "#707070" }}
                                             key={index}>
                                             <View style={styles.columnNumber}>
