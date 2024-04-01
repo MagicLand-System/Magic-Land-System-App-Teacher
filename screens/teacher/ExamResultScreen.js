@@ -129,6 +129,18 @@ export default function ExamResultScreen({ route, navigation }) {
         // console.log("studentTmpList ", studentTmpList[focusStudentIndex]);
     }
 
+    const handleChangeStudentRate2 = async (note, focusIndex) => {
+        const updateArray = JSON.parse(JSON.stringify(studentTmpList))
+        // const updateArray = [...studentList]
+        if (updateArray[focusIndex]) {
+            updateArray[focusIndex].status = note;
+        }
+        console.log(updateArray[focusIndex]);
+        setStudentList(updateArray)
+        setStudentTmpList(updateArray)
+        setModalVisible({ ...modalVisible, chooseRate: false })
+    }
+
     const handleCompleteAttend = async () => {
         const response = await saveOffLineScore(classDetail?.classId, quizData?.examId, studentTmpList)
         if (response?.status === 200) {
