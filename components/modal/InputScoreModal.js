@@ -6,7 +6,7 @@ import SpinnerLoading from '../SpinnerLoading';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
-export default function InputScoreModal({ visible, student, score, note, onCancle, onSubmit, loading }) {
+export default function InputScoreModal({ visible, student, score, note, onCancle, onSubmit, onChooseRate, loading }) {
 
     const [tmpScore, setTmpScore] = useState(score)
     const [tmpNote, setTmpNote] = useState(note)
@@ -55,17 +55,24 @@ export default function InputScoreModal({ visible, student, score, note, onCancl
                         value={tmpScore}
                         onChangeText={handleInputScore}
                         style={styles.searchField}
+                        placeholder={String(tmpScore)}
                         keyboardType="numeric"
                     />
                 </View>
                 <View style={{ ...styles.flexColumnBetween, width: "85%" }}>
                     <Text style={{ width: WIDTH * 0.2 }}>Ghi chú : </Text>
-                    <TextInput
+                    <TouchableOpacity
+                        style={styles.searchField}
+                        onPress={onChooseRate}
+                    >
+                        <Text style={{ textAlign: "right", paddingVertical: 5 }}>{tmpNote ? tmpNote : "Chưa có đánh giá"}</Text>
+                    </TouchableOpacity>
+                    {/* <TextInput
                         value={tmpNote}
                         onChangeText={setTmpNote}
                         style={styles.searchField}
                         multiline={true}
-                    />
+                    /> */}
                 </View>
 
                 <View style={styles.confirm}>

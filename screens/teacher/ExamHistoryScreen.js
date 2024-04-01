@@ -4,24 +4,60 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Header from '../../components/header/Header';
 import { useNavigation } from '@react-navigation/native';
+import ChooseRateModal from '../../components/modal/ChooseRateModal';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
+const rateList = [
+    {
+        vn: "Bé có tiên bộ",
+        eng: "prolapse",
+    },
+    {
+        vn: "Xuất sắc",
+        eng: "excellent",
+    },
+    {
+        vn: "Làm tốt lắm",
+        eng: "eoodjob",
+    },
+    {
+        vn: "giỏi quá",
+        eng: "verygood",
+    },
+    {
+        vn: "Cố gắng lên nào",
+        eng: "tryharder",
+    },
+    {
+        vn: "Bé thực hiện tốt",
+        eng: "doeswell",
+    },
+]
+
+
 export default function ExamHistoryScreen({ route }) {
     const navigation = useNavigation()
 
-    const quizData = route?.params?.quizData?.examInfors[0]
+    const [quizData, setQuizData] = useState(route?.params?.quizData?.examInfors[0])
     const studentDetail = route?.params?.quizData
     const quizType = route?.params?.quizType
     const quizHistory = route?.params?.quizData?.examInfors[0]?.studentWorkResult
-    console.log(route.params);
+    const focusIndex = route?.params?.focusIndex
+    const handleChangeStudentRate = route.params?.handleChangeStudentRate
+    const [modalVisible, setModalVisible] = useState({ chooseRate: false })
+
     // const [quizHistory, setQuizHistory] = useState()
     const goback = () => {
-        const dataToTransfer = { data: "0" };
-        navigation.setParams({ dataToTransfer: dataToTransfer });
-        console.log(route.params);
+
         navigation.pop()
+    }
+
+    const handleChooseRate = (rate) => {
+        setQuizData({ ...quizData, examStatus: rate })
+        setModalVisible({ ...modalVisible, chooseRate: false })
+        handleChangeStudentRate(rate, focusIndex)
     }
 
 
@@ -115,11 +151,17 @@ export default function ExamHistoryScreen({ route }) {
                     <Text style={styles.boldText}>{quizData?.noAttemp} lần</Text>
                 </View>
 
-                <View style={styles.titleView}>
+                <TouchableOpacity style={styles.titleView} onPress={() => setModalVisible({ ...modalVisible, chooseRate: true })}>
                     <Text style={styles.title}>Đánh giá của giáo viên: </Text>
-                    <Text> {quizData?.examStatus ? quizData?.examStatus : studentDetail?.note}</Text>
-                </View>
+                    <Text> {rateList.find(obj => obj.eng.toLowerCase() === (quizData?.examStatus ? quizData?.examStatus : studentDetail?.note)?.toLowerCase())?.vn}</Text>
+                </TouchableOpacity>
             </ScrollView >
+            <ChooseRateModal
+                visible={modalVisible.chooseRate}
+                rate={quizData?.examStatus ? quizData?.examStatus : studentDetail?.note}
+                onCancle={() => setModalVisible({ ...modalVisible, chooseRate: false })}
+                handleChangeStudentRate={handleChooseRate}
+            />
         </>
     )
 }

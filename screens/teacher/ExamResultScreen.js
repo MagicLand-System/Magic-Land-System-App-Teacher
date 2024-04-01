@@ -7,9 +7,37 @@ import { getAttendanceList, getAttendanceListByDate, getExamResult, takeAttendan
 import { checkCurrentDate } from '../../util/util';
 import InputScoreModal from '../../components/modal/InputScoreModal';
 import { saveOffLineScore } from '../../api/quiz';
+import ChooseRateModal from '../../components/modal/ChooseRateModal';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
+
+const rateList = [
+    {
+        vn: "Bé có tiên bộ",
+        eng: "prolapse",
+    },
+    {
+        vn: "Xuất sắc",
+        eng: "excellent",
+    },
+    {
+        vn: "Làm tốt lắm",
+        eng: "eoodjob",
+    },
+    {
+        vn: "giỏi quá",
+        eng: "verygood",
+    },
+    {
+        vn: "Cố gắng lên nào",
+        eng: "tryharder",
+    },
+    {
+        vn: "Bé thực hiện tốt",
+        eng: "doeswell",
+    },
+]
 
 export default function ExamResultScreen({ route, navigation }) {
 
@@ -21,17 +49,12 @@ export default function ExamResultScreen({ route, navigation }) {
     const [focusStudentIndex, setFocusStudentIndex] = useState(0)
     const [edittingMode, setEdittingMode] = useState(false)
     const [searchValue, setSearchValue] = useState("")
-    const [modalVisible, setModalVisible] = useState({ editStudenInfor: false })
+    const [modalVisible, setModalVisible] = useState({ editStudenInfor: false, chooseRate: false })
 
     useEffect(() => {
         loadStudentData()
     }, [route.params.classDetail])
 
-    useEffect(() => {
-        navigation.setOptions({
-            handleChangeStudentRate: handleChangeStudentRate,
-        });
-    }, [navigation]);
 
     const loadStudentData = async () => {
         const response = await getExamResult({ classId: classDetail.classId, examIdList: [quizData?.examId] })
@@ -62,19 +85,32 @@ export default function ExamResultScreen({ route, navigation }) {
         setModalVisible({ ...modalVisible, editStudenInfor: false })
     }
 
-    const handleChangeStudentRate = async (note) => {
+    const handleChangeStudentRate = async (note, focusIndex) => {
         const updateArray = JSON.parse(JSON.stringify(studentTmpList))
         // const updateArray = [...studentList]
-        if (updateArray[focusStudentIndex]) {
-            updateArray[focusStudentIndex].status = note;
+        if (updateArray[focusIndex]) {
+            updateArray[focusIndex].status = note;
         }
         setStudentList(updateArray)
+        setModalVisible({ ...modalVisible, editStudenInfor: false, chooseRate: false })
         await handleCompleteAttend()
+    }
+
+    const handleChangeStudentRate2 = async (note, focusIndex) => {
+        const updateArray = JSON.parse(JSON.stringify(studentTmpList))
+        // const updateArray = [...studentList]
+        if (updateArray[focusIndex]) {
+            updateArray[focusIndex].status = note;
+        }
+        console.log(updateArray[focusIndex]);
+        setStudentList(updateArray)
+        setStudentTmpList(updateArray)
+        setModalVisible({ ...modalVisible, chooseRate: false })
     }
 
     const handleCompleteAttend = async () => {
         const response = await saveOffLineScore(classDetail?.classId, quizData?.examId, studentList)
-        // console.log(classDetail?.classId, quizData?.examId, studentList);
+        console.log(classDetail?.classId, quizData?.examId, studentList);
         if (response?.status === 200) {
             setStudentList(JSON.parse(JSON.stringify(studentTmpList)))
             setEdittingMode(false)
@@ -97,18 +133,19 @@ export default function ExamResultScreen({ route, navigation }) {
     const handlePressOnStudent = (student) => {
 
         const studentIndex = studentList?.findIndex(obj => obj?.studentId === student?.studentId)
+        setFocusStudentIndex(studentIndex)
         if (quizData?.quizType !== "offline") {
             if (studentList[studentIndex] && studentList[studentIndex]?.examInfors[0]) {
                 navigation.push("ExamHistoryScreen",
                     {
                         quizData: studentList[studentIndex],
                         quizType: quizData.quizType,
-                        // handleChangeStudentRate: handleChangeStudentRate,
+                        handleChangeStudentRate: handleChangeStudentRate,
+                        focusIndex: studentIndex,
                     }
                 )
             }
         } else if (edittingMode) {
-            setFocusStudentIndex(studentIndex)
             setModalVisible({ ...modalVisible, editStudenInfor: true })
         }
     }
@@ -165,7 +202,8 @@ export default function ExamResultScreen({ route, navigation }) {
                                                             <Text style={{ textAlign: "center" }}> 0</Text>
                                                 }
                                             </View>
-                                            <Text style={styles.columnNote}>{item.status}</Text>
+                                            <Text style={styles.columnNote}>{rateList.find(obj => obj.eng.toLowerCase() === item.status?.toLowerCase())?.vn}</Text>
+
                                         </TouchableOpacity>
                                     )
                                 })
@@ -198,9 +236,16 @@ export default function ExamResultScreen({ route, navigation }) {
                 visible={modalVisible?.editStudenInfor}
                 student={studentTmpList[focusStudentIndex]}
                 score={studentTmpList[focusStudentIndex]?.score ? studentTmpList[focusStudentIndex]?.score : studentTmpList[focusStudentIndex]?.examInfors[0] ? studentTmpList[focusStudentIndex]?.examInfors[0]?.scoreEarned : 0}
-                note={""}
+                note={studentTmpList[focusStudentIndex]?.status ? studentTmpList[focusStudentIndex]?.status : studentTmpList[focusStudentIndex]?.examStatus}
+                onChooseRate={() => setModalVisible({ ...modalVisible, chooseRate: true })}
                 onCancle={() => { setModalVisible({ ...modalVisible, editStudenInfor: false }) }}
                 onSubmit={(score, note) => { handleChangeStudentInfor(score, note) }}
+            />
+            <ChooseRateModal
+                visible={modalVisible.chooseRate}
+                rate={studentTmpList[focusStudentIndex]?.status ? studentTmpList[focusStudentIndex]?.status : studentTmpList[focusStudentIndex]?.examStatus}
+                onCancle={() => setModalVisible({ ...modalVisible, chooseRate: false })}
+                handleChangeStudentRate={(rate) => handleChangeStudentRate2(rate, focusStudentIndex)}
             />
         </>
     )
