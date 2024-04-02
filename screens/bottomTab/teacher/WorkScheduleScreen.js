@@ -107,7 +107,7 @@ export default function WorkScheduleScreen({ navigation }) {
     {
       label: "Điểm danh",
       onPress: (item) => {
-        navigation.push("AttendanceScreen", { classDetail: item, date: item?.date, slot: item?.slotOrder })
+        navigation.push("AttendanceScreen", { classDetail: item, date: item?.date, slot: item?.slot?.slotOrder })
       }
     },
     {
