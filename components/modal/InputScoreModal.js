@@ -6,6 +6,33 @@ import SpinnerLoading from '../SpinnerLoading';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
+const rateList = [
+    {
+        vn: "Bé có tiên bộ",
+        eng: "prolapse",
+    },
+    {
+        vn: "Xuất sắc",
+        eng: "excellent",
+    },
+    {
+        vn: "Làm tốt lắm",
+        eng: "eoodjob",
+    },
+    {
+        vn: "giỏi quá",
+        eng: "verygood",
+    },
+    {
+        vn: "Cố gắng lên nào",
+        eng: "tryharder",
+    },
+    {
+        vn: "Bé thực hiện tốt",
+        eng: "doeswell",
+    },
+]
+
 export default function InputScoreModal({ visible, student, score, note, onCancle, onSubmit, onChooseRate, loading }) {
 
     const [tmpScore, setTmpScore] = useState(score)
@@ -65,7 +92,7 @@ export default function InputScoreModal({ visible, student, score, note, onCancl
                         style={styles.searchField}
                         onPress={onChooseRate}
                     >
-                        <Text style={{ textAlign: "right", paddingVertical: 5 }}>{tmpNote ? tmpNote : "Chưa có đánh giá"}</Text>
+                        <Text style={{ textAlign: "right", paddingVertical: 5 }}>{tmpNote ? rateList.find(obj => obj.eng.toLowerCase() === tmpNote?.toLowerCase())?.vn : "Chưa có đánh giá"}</Text>
                     </TouchableOpacity>
                     {/* <TextInput
                         value={tmpNote}
