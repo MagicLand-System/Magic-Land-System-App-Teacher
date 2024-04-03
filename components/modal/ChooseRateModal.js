@@ -58,7 +58,15 @@ export default function ChooseRateModal({ visible, handleChangeStudentRate, rate
                                 fontWeight: "600",
                                 fontSize: 18
                             }}>
-                            {rateList.find(obj => obj.eng.toLowerCase() === rate?.toLowerCase())?.vn}
+                            {
+                                rateList.find(obj => obj.eng.toLowerCase() === rate?.toLowerCase()) ?
+                                    rateList.find(obj => obj.eng.toLowerCase() === rate?.toLowerCase())?.vn
+                                    : rate ?
+                                        rate
+                                        :
+                                        "Chưa đánh giá"
+                            }
+                            {/* {rateList.find(obj => obj.eng.toLowerCase() === rate?.toLowerCase())?.vn} */}
                         </Text>
                     </View>
                     <View style={styles.contentList}>

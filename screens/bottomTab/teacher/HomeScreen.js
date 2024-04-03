@@ -88,9 +88,12 @@ export default function HomeScreen({ navigation }) {
               </View>
             </View>
           </View>
-          <View style={styles.searchBar}>
-            <SearchBar input={searchValue} setInput={handleSearch} setFilterModal={setFilterVisible} placeHolder={"Tìm kiếm khóa học..."} />
-          </View>
+          {
+            classList[0] &&
+            <View style={styles.searchBar}>
+              <SearchBar input={searchValue} setInput={handleSearch} setFilterModal={setFilterVisible} placeHolder={"Tìm kiếm khóa học..."} />
+            </View>
+          }
         </View>
         <View style={styles.titleView}>
           <Text style={styles.title}>Lớp học hôm nay:</Text>
@@ -160,7 +163,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#241468",
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
-    paddingBottom: 20
+    paddingBottom: 20,
+    paddingTop: WIDTH * 0.05
   },
   headerInforLeft: {
     marginTop: 10,

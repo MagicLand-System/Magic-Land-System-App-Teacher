@@ -153,7 +153,15 @@ export default function ExamHistoryScreen({ route }) {
 
                 <TouchableOpacity style={styles.titleView} onPress={() => setModalVisible({ ...modalVisible, chooseRate: true })}>
                     <Text style={styles.title}>Đánh giá của giáo viên: </Text>
-                    <Text> {rateList.find(obj => obj.eng.toLowerCase() === (quizData?.examStatus ? quizData?.examStatus : studentDetail?.note)?.toLowerCase())?.vn}</Text>
+                    {
+                        rateList.find(obj => obj.eng.toLowerCase() === (quizData?.examStatus ? quizData?.examStatus : studentDetail?.note)?.toLowerCase()) ?
+                            <Text >{rateList.find(obj => obj.eng.toLowerCase() === (quizData?.examStatus ? quizData?.examStatus : studentDetail?.note)?.toLowerCase())?.vn}</Text>
+                            : quizData.examStatus ?
+                                <Text >{quizData.examStatus}</Text>
+                                :
+                                <Text >Chưa đánh giá</Text>
+                    }
+                    {/* <Text> {rateList.find(obj => obj.eng.toLowerCase() === (quizData?.examStatus ? quizData?.examStatus : studentDetail?.note)?.toLowerCase())?.vn}</Text> */}
                 </TouchableOpacity>
             </ScrollView >
             <ChooseRateModal
