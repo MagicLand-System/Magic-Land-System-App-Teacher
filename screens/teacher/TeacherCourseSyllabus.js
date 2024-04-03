@@ -20,6 +20,7 @@ export default function TeacherCourseSyllabus({ route, navigation }) {
     const [courseSyllabus, setCourseSyllabus] = useState({})
     const [quizList, setQuizList] = useState([])
     const [loading, setLoading] = useState(true)
+    const [tabType, setTabType] = useState("syllabus")
     let count = 0
 
     useEffect(() => {
@@ -67,123 +68,157 @@ export default function TeacherCourseSyllabus({ route, navigation }) {
 
     return (
         <>
-            <Header navigation={navigation} goback={navigation.pop} title={courseItem?.name} />
+            <Header navigation={navigation} goback={navigation.pop} title={courseItem?.className} />
+            <View style={styles.tabContainer}>
+                <TouchableOpacity
+                    style={{ ...styles.tabItem, borderRightWidth: 2 }}
+                    onPress={() => setTabType("syllabus")}
+                >
+                    <Text style={styles.tabTitle}>Thông tin chi tiết</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={{ ...styles.tabItem }}
+                    onPress={() => setTabType("progress")}
+                >
+                    <Text style={styles.tabTitle}>Bài tập</Text>
+                </TouchableOpacity>
+            </View>
             {
                 loading ?
                     <SpinnerLoading />
                     :
                     <ScrollView style={styles.container}>
-                        <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false} style={styles.program}>
-                            {
-                                !loading &&
-                                courseSyllabus?.syllabusInformations?.topics?.map((item, index) => {
-                                    return (
-                                        <View
-                                            style={{
-                                                ...styles.mainTab,
-                                                backgroundColor: index % 2 === 0 ? "#C2D9FF" : "white"
-                                            }}
-                                            key={index}
-                                        >
-                                            <TouchableOpacity
-                                                style={{ ...styles.flexColumnBetween, paddingVertical: 8 }}
-                                                onPress={() => {
-                                                    setCourseSyllabus(prevcourseSyllabus => {
-                                                        const updatedTopics = [...prevcourseSyllabus.syllabusInformations?.topics];
-                                                        updatedTopics[index] = { ...updatedTopics[index], expand: !updatedTopics[index].expand };
-                                                        return {
-                                                            ...prevcourseSyllabus,
-                                                            syllabusInformations: { ...prevcourseSyllabus.syllabusInformations, topics: updatedTopics }
-                                                        };
-                                                    });
-                                                }}
-                                            >
-                                                <Text style={styles.mainText}>
-                                                    <Text numberOfLines={1}>{"Chủ đề " + (index + 1) + " - " + item.topicName}  </Text>
-
-                                                </Text>
-
-                                                {
-                                                    !item.expand ?
-                                                        <Icon name={"plus"} color={"#241468"} size={25} />
-                                                        :
-                                                        <Icon name={"minus"} color={"#241468"} size={25} />
-                                                }
-                                            </TouchableOpacity>
+                        {
+                            !loading &&
+                            <>
+                                {
+                                    tabType === "syllabus" ?
+                                        <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false} style={styles.program}>
                                             {
-                                                (
-                                                    !item.sessions[0] ?
-                                                        item.expand === true &&
-                                                        <Text style={styles.childText}>Không có buổi học</Text>
-                                                        :
-                                                        item.sessions.map((element, key) => {
-                                                            return (
-                                                                <React.Fragment key={key}>
-                                                                    {
+                                                courseSyllabus?.syllabusInformations?.topics?.map((item, index) => {
+                                                    return (
+                                                        <View
+                                                            style={{
+                                                                ...styles.mainTab,
+                                                                backgroundColor: index % 2 === 0 ? "#C2D9FF" : "white"
+                                                            }}
+                                                            key={index}
+                                                        >
+                                                            <TouchableOpacity
+                                                                style={{ ...styles.flexColumnBetween, paddingVertical: 8 }}
+                                                                onPress={() => {
+                                                                    setCourseSyllabus(prevcourseSyllabus => {
+                                                                        const updatedTopics = [...prevcourseSyllabus.syllabusInformations?.topics];
+                                                                        updatedTopics[index] = { ...updatedTopics[index], expand: !updatedTopics[index].expand };
+                                                                        return {
+                                                                            ...prevcourseSyllabus,
+                                                                            syllabusInformations: { ...prevcourseSyllabus.syllabusInformations, topics: updatedTopics }
+                                                                        };
+                                                                    });
+                                                                }}
+                                                            >
+                                                                <Text style={styles.mainText}>
+                                                                    <Text numberOfLines={1}>{"Chủ đề " + (index + 1) + " - " + item.topicName}  </Text>
+
+                                                                </Text>
+
+                                                                {
+                                                                    !item.expand ?
+                                                                        <Icon name={"plus"} color={"#241468"} size={25} />
+                                                                        :
+                                                                        <Icon name={"minus"} color={"#241468"} size={25} />
+                                                                }
+                                                            </TouchableOpacity>
+                                                            {
+                                                                (
+                                                                    !item.sessions[0] ?
                                                                         item.expand === true &&
-                                                                        <View style={{ ...styles.flexColumn }}>
-                                                                            <Icon name={"checkbox-blank-circle-outline"} color={"#888888"} size={22} />
-                                                                            <Text style={{ ...styles.childText, fontWeight: "700" }}>Buổi {element?.orderSession} ({formatDate(element?.date)})</Text>
-                                                                        </View>
-                                                                    }
-                                                                    {
-                                                                        (
-                                                                            !element.contents[0] ?
-                                                                                item.expand === true &&
-                                                                                <Text style={styles.childText}>Không có chủ đề</Text>
-                                                                                :
-                                                                                element?.contents?.map((content, key) => {
-                                                                                    count += 1
-                                                                                    return (
-                                                                                        <React.Fragment key={key}>
-                                                                                            {
+                                                                        <Text style={styles.childText}>Không có buổi học</Text>
+                                                                        :
+                                                                        item.sessions.map((element, key) => {
+                                                                            return (
+                                                                                <React.Fragment key={key}>
+                                                                                    {
+                                                                                        item.expand === true &&
+                                                                                        <View style={{ ...styles.flexColumn }}>
+                                                                                            <Icon name={"checkbox-blank-circle-outline"} color={"#888888"} size={22} />
+                                                                                            <Text style={{ ...styles.childText, fontWeight: "700" }}>Buổi {element?.orderSession} ({formatDate(element?.date)})</Text>
+                                                                                        </View>
+                                                                                    }
+                                                                                    {
+                                                                                        (
+                                                                                            !element.contents[0] ?
                                                                                                 item.expand === true &&
-                                                                                                <Text style={{ ...styles.childText, marginLeft: 7, fontWeight: "400" }} key={key}>{count}. {content.content}</Text>
-                                                                                            }
-                                                                                            {
-                                                                                                item.expand === true &&
-                                                                                                content?.details?.map((detail, index) => {
+                                                                                                <Text style={styles.childText}>Không có chủ đề</Text>
+                                                                                                :
+                                                                                                element?.contents?.map((content, key) => {
+                                                                                                    count += 1
                                                                                                     return (
-                                                                                                        <Text style={{ ...styles.childText, marginLeft: 15, fontWeight: "300" }} key={index}>{count}.{index + 1} {detail}</Text>
+                                                                                                        <React.Fragment key={key}>
+                                                                                                            {
+                                                                                                                item.expand === true &&
+                                                                                                                <Text style={{ ...styles.childText, marginLeft: 7, fontWeight: "400" }} key={key}>{count}. {content.content}</Text>
+                                                                                                            }
+                                                                                                            {
+                                                                                                                item.expand === true &&
+                                                                                                                content?.details?.map((detail, index) => {
+                                                                                                                    return (
+                                                                                                                        <Text style={{ ...styles.childText, marginLeft: 15, fontWeight: "300" }} key={index}>{count}.{index + 1} {detail}</Text>
+                                                                                                                    )
+                                                                                                                })
+                                                                                                            }
+                                                                                                        </React.Fragment>
                                                                                                     )
                                                                                                 })
-                                                                                            }
-                                                                                        </React.Fragment>
-                                                                                    )
-                                                                                })
-                                                                        )
-                                                                    }
-                                                                    {
-                                                                        item.expand === true &&
-                                                                        <View style={{ marginLeft: 7 }}>
-                                                                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={() => { handleAttendance(element) }}>
-                                                                                <Icon name={"file-document"} color={"#241468"} size={22} />
-                                                                                <Text style={{ ...styles.childText, fontWeight: "400", marginLeft: 7, marginVertical: 7, color: "#241468" }} >Điểm danh</Text>
-                                                                            </TouchableOpacity>
-                                                                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={() => { handleRate(element) }}>
-                                                                                <Icon name={"star-circle"} color={"#241468"} size={22} />
-                                                                                <Text style={{ ...styles.childText, fontWeight: "400", marginLeft: 7, marginVertical: 7, color: "#241468" }} >Đánh giá</Text>
-                                                                            </TouchableOpacity>
-                                                                        </View>
+                                                                                        )
+                                                                                    }
+                                                                                    {
+                                                                                        item.expand === true &&
+                                                                                        <View style={{ marginLeft: 7 }}>
+                                                                                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={() => { handleAttendance(element) }}>
+                                                                                                <Icon name={"file-document"} color={"#241468"} size={22} />
+                                                                                                <Text style={{ ...styles.childText, fontWeight: "400", marginLeft: 7, marginVertical: 7, color: "#241468" }} >Điểm danh</Text>
+                                                                                            </TouchableOpacity>
+                                                                                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={() => { handleRate(element) }}>
+                                                                                                <Icon name={"star-circle"} color={"#241468"} size={22} />
+                                                                                                <Text style={{ ...styles.childText, fontWeight: "400", marginLeft: 7, marginVertical: 7, color: "#241468" }} >Đánh giá</Text>
+                                                                                            </TouchableOpacity>
+                                                                                        </View>
 
-                                                                    }
-                                                                    {
+                                                                                    }
+                                                                                    {/* {
                                                                         item.expand === true && findQuizByDate(element?.date) &&
                                                                         <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", marginLeft: 7 }} onPress={() => { handleDoExam(findQuizByDate(element?.date)) }}>
                                                                             <Icon name={"folder"} color={"#241468"} size={22} />
                                                                             <Text style={{ ...styles.childText, fontWeight: "400", marginLeft: 7, marginVertical: 7, color: "#241468" }} >{findQuizByDate(element?.date)?.examName} ({formatDate(element?.date)})</Text>
                                                                         </TouchableOpacity>
-                                                                    }
-                                                                </React.Fragment>
-                                                            )
-                                                        })
-                                                )
+                                                                    } */}
+                                                                                </React.Fragment>
+                                                                            )
+                                                                        })
+                                                                )
+                                                            }
+                                                        </View>
+                                                    )
+                                                })
                                             }
-                                        </View>
-                                    )
-                                })
-                            }
-                        </ScrollView>
+                                        </ScrollView>
+                                        :
+                                        <ScrollView nestedScrollEnabled={true} showsVerticalScrollIndicator={false} style={styles.program}>
+                                            {
+                                                quizList?.map((item, key) => {
+                                                    return (
+                                                        <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", marginLeft: 7, marginVertical: 5 }} key={key} onPress={() => { handleDoExam(item) }}>
+                                                            <Icon name={"folder"} color={"#241468"} size={22} />
+                                                            <Text style={{ ...styles.childText, fontWeight: "400", marginLeft: 7, marginVertical: 7, color: "#241468" }} >{item?.examName} ({formatDate(item?.date)})</Text>
+                                                        </TouchableOpacity>
+                                                    )
+                                                })
+                                            }
+                                        </ScrollView>
+                                }
+                            </>
+                        }
                     </ScrollView >
             }
         </>
@@ -220,6 +255,38 @@ const styles = StyleSheet.create({
     childText: {
         paddingLeft: 10,
         marginBottom: 5,
+    },
+
+    tabContainer: {
+        width: WIDTH * 0.9,
+        flexDirection: 'row',
+        borderRadius: 10,
+        marginHorizontal: WIDTH * 0.05,
+        marginVertical: 10,
+        justifyContent: "space-around",
+        alignItems: "center",
+        backgroundColor: "white",
+
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 10,
+            height: 100,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+
+        elevation: 3,
+    },
+    tabItem: {
+        justifyContent: "center",
+        alignItems: "center",
+        width: "50%",
+        paddingVertical: 10,
+        borderColor: "#4582E6",
+    },
+    tabTitle: {
+        color: "#4582E6",
+        fontWeight: "700"
     },
 
     flexColumnCenter: {

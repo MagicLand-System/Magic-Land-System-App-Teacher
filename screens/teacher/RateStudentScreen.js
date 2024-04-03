@@ -105,7 +105,7 @@ export default function RateStudentScreen({ route, navigation }) {
             <Text style={styles.columnNumber}>STT</Text>
             <Text style={styles.columnName}>Tên học viên</Text>
             <Text style={styles.columnStatus}>Trạng thái</Text>
-            <Text style={styles.columnNote}>Ghi chú</Text>
+            <Text style={styles.columnNote}>Đánh giá</Text>
           </View>
           {
             filterByStudentName((editMode ? studentTmpList : studentList), searchValue)?.map((item, index) => {

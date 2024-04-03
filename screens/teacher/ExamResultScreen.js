@@ -177,7 +177,7 @@ export default function ExamResultScreen({ route, navigation }) {
                                 <Text style={styles.columnNumber}>STT</Text>
                                 <Text style={styles.columnName}>Tên học viên</Text>
                                 <Text style={styles.columnStatus}>Điểm</Text>
-                                <Text style={styles.columnNote}>Ghi chú</Text>
+                                <Text style={styles.columnNote}>Đánh giá</Text>
                             </View>
                             {
                                 filterByStudentName((edittingMode ? studentTmpList : studentList), searchValue).map((item, index) => {
@@ -202,8 +202,14 @@ export default function ExamResultScreen({ route, navigation }) {
                                                             <Text style={{ textAlign: "center" }}> 0</Text>
                                                 }
                                             </View>
-                                            <Text style={styles.columnNote}>{rateList.find(obj => obj.eng.toLowerCase() === item.status?.toLowerCase())?.vn}</Text>
-
+                                            {
+                                                rateList.find(obj => obj.eng.toLowerCase() === item.status?.toLowerCase()) ?
+                                                    <Text style={styles.columnNote}>{rateList.find(obj => obj.eng.toLowerCase() === item.status?.toLowerCase())?.vn}</Text>
+                                                    : item.status ?
+                                                        <Text style={styles.columnNote}>{item.status}</Text>
+                                                        :
+                                                        <Text style={styles.columnNote}>Chưa đánh giá</Text>
+                                            }
                                         </TouchableOpacity>
                                     )
                                 })
@@ -297,7 +303,7 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     columnNote: {
-        width: "25%",
+        width: "20%",
         paddingLeft: 5
     },
     checkIcon: {
