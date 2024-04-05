@@ -141,7 +141,12 @@ export default function TeacherCourseSyllabus({ route, navigation }) {
                                                                                     {
                                                                                         item.expand === true &&
                                                                                         <View style={{ ...styles.flexColumn }}>
-                                                                                            <Icon name={"checkbox-blank-circle-outline"} color={"#888888"} size={22} />
+                                                                                            {
+                                                                                                isDateInPast(element?.date) ?
+                                                                                                    <Icon name={"checkbox-marked-circle-outline"} color={"#888888"} size={22} />
+                                                                                                    :
+                                                                                                    <Icon name={"checkbox-blank-circle-outline"} color={"#888888"} size={22} />
+                                                                                            }
                                                                                             <Text style={{ ...styles.childText, fontWeight: "700" }}>Buổi {element?.orderSession} ({formatDate(element?.date)})</Text>
                                                                                         </View>
                                                                                     }
