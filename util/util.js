@@ -219,3 +219,9 @@ export function getSessionInfoByDate(syllabusInformations) {
     }
 }
 
+export function isDateInPast(dateString) {
+    const dateToCompare = new Date(dateString);
+    const currentDate = new Date();
+    return dateToCompare < currentDate;
+}
+

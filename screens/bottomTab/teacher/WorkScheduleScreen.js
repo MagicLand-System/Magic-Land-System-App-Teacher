@@ -141,13 +141,16 @@ export default function WorkScheduleScreen({ navigation }) {
             calendarType === "month" &&
             <>
               <Agenda
-                onDayPress={(date) => { setDateSelected(date.dateString) }}
+                onDayPress={(date) => {
+                  setDateSelected(date.dateString)
+                  handleClassNavigate(item)
+                }}
                 selected={dateSelected}
                 items={
                   formatDataAgenda()
                 }
                 renderItem={(item) => (
-                  <TouchableOpacity style={styles.item} onPress={() => { setDateSelected(item?.date); setCalendarType("day") }}>
+                  <TouchableOpacity style={styles.item} onPress={() => { setDateSelected(item?.date); setCalendarType("day"); handleClassNavigate(item) }}>
                     <Text style={{ ...styles.boldText }}>{shortedTime(item?.slot?.startTime)} - {shortedTime(item?.slot?.endTime)}</Text>
                     <Text style={{ ...styles.boldText }}>{item?.className} - <Text style={{ textTransform: "capitalize" }}> {item?.method} </Text> {renderAttendanceStatus(item?.attendanceStatus)} </Text>
                     <Text style={{ ...styles.itemText }}>Phòng {item?.room?.name ? item.room.name : 'N/A'} - Lầu {item?.room?.floor ? item.room.floor : 'N/A'}</Text>
