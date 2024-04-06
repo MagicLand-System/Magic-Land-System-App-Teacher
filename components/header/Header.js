@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         padding: 5,
-        paddingTop: HEIGHT * 0.05
+        paddingTop: HEIGHT * 0.03
     },
     backButton: {
         position: "absolute",
