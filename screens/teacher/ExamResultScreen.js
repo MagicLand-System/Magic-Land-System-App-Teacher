@@ -88,6 +88,7 @@ export default function ExamResultScreen({ route, navigation }) {
             updateArray[focusStudentIndex].score = score;
             updateArray[focusStudentIndex].status = note;
         }
+        console.log(updateArray[focusStudentIndex]);
         setStudentTmpList(updateArray)
         setModalVisible({ ...modalVisible, editStudenInfor: false })
 
