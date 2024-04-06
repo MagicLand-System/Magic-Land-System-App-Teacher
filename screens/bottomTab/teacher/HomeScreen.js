@@ -28,6 +28,7 @@ const noficationListDefault = [
 
 export default function HomeScreen({ navigation }) {
 
+  const [currentTime, setCurrentTime] = useState(new Date());
   const [searchValue, setSearchValue] = useState("")
   const [classList, setClassList] = useState([])
   const [noficationList, setNoficationList] = useState(noficationListDefault)
@@ -38,6 +39,29 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => {
     loadClassData()
   }, [])
+
+  useEffect(() => {
+    const loadTime = async () => {
+      try {
+        const response = await getRealTime();
+        const parsedTime = new Date(response);
+        const updatedTime = new Date(parsedTime.getTime() + 1000); // Adding one second
+        setCurrentTime(updatedTime);
+      } catch (error) {
+        console.error('Error fetching time:', error);
+      }
+    };
+
+    // Initial load
+    loadTime();
+
+    // Update time every second
+    const intervalId = setInterval(() => {
+      loadTime()
+    }, 60000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const loadClassData = async () => {
     const response = await getAllAttendanceClass()
@@ -78,7 +102,7 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.header}>
           <View style={{ ...styles.flexBetweenColumn, paddingHorizontal: 20 }}>
             <View style={styles.headerInforLeft}>
-              <Text style={{ color: "white" }}>Xin chào!</Text>
+              <Text style={{ color: "white" }}>Xin chào!  {currentTime?.getDate()}/{currentTime?.getMonth() + 1}/{currentTime?.getFullYear() + 1}</Text>
               <Text style={{ fontWeight: "700", fontSize: 18, color: "white" }}>GV: {user.fullName}</Text>
             </View>
             <View style={styles.headerInforRight}>

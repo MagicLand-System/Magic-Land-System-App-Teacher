@@ -24,3 +24,12 @@ export const checkExist = async ({ phone }) => {
     });
     return response.data;
 };
+
+export const getRealTime = async () => {
+    try {
+        const response = await instance.get('/System/GetTime');
+        return response.data
+    } catch (error) {
+        return response?.response?.data
+    }
+};
