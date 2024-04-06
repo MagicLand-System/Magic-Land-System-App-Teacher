@@ -88,7 +88,8 @@ export default function ClassOptionScreen({ route, navigation }) {
                         <ClassOption
                             title={"Đánh giá"}
                             icon={<Icon name={"book"} color={"#4582E6"} size={25} />}
-                            onClick={() => navigation.push("RateStudentScreen", { classDetail: classDetail, date: date, noSession: noSession })}
+                            // onClick={() => navigation.push("RateStudentScreen", { classDetail: classDetail, date: date, noSession: noSession })}
+                            
                         />
 
                     </ScrollView>
