@@ -81,6 +81,7 @@ export default function ExamResultScreen({ route, navigation }) {
             updateArray[focusStudentIndex].score = score;
             updateArray[focusStudentIndex].status = note;
         }
+        console.log(updateArray[focusStudentIndex]);
         setStudentTmpList(updateArray)
         setModalVisible({ ...modalVisible, editStudenInfor: false })
     }
@@ -109,8 +110,8 @@ export default function ExamResultScreen({ route, navigation }) {
     }
 
     const handleCompleteAttend = async () => {
-        const response = await saveOffLineScore(classDetail?.classId, quizData?.examId, studentList)
-        console.log(classDetail?.classId, quizData?.examId, studentList);
+        const response = await saveOffLineScore(classDetail?.classId, quizData?.examId, studentTmpList)
+        console.log(classDetail?.classId, quizData?.examId, studentTmpList);
         if (response?.status === 200) {
             setStudentList(JSON.parse(JSON.stringify(studentTmpList)))
             setEdittingMode(false)
