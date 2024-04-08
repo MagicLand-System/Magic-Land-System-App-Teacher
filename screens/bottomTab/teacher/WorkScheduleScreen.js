@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { View, Text, ScrollView, Dimensions, StyleSheet, TouchableOpacity } from 'react-native'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import StudentView from '../../../components/StudentView';
@@ -7,14 +7,16 @@ import Header from '../../../components/header/Header';
 import { getWorkSchedule } from '../../../api/teacher';
 import { formatTime, shortedTime } from '../../../util/util';
 import ClassCartCard from '../../../components/ClassCartCard';
+import { TimeContext } from '../../../context/TimeContext';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 export default function WorkScheduleScreen({ navigation }) {
 
+  const { time } = useContext(TimeContext)
   const [dateList, setDateList] = useState([])
-  const [dateSelected, setDateSelected] = useState(new Date);
+  const [dateSelected, setDateSelected] = useState(new Date(time));
   const [calendarType, setCalendarType] = useState("month")
 
   LocaleConfig.locales['fr'] = {
@@ -34,7 +36,7 @@ export default function WorkScheduleScreen({ navigation }) {
   const loadScheduleData = async () => {
     const response = await getWorkSchedule()
     if (response?.status === 200) {
-      const newDate = new Date().toISOString()
+      const newDate = new Date(time).toISOString()
       setDateList(response?.data)
       setDateSelected(newDate)
     } else {

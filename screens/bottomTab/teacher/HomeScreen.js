@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useSelector } from 'react-redux';
@@ -9,6 +9,7 @@ import SearchBar from '../../../components/SearchBar';
 import ClassCartCard from '../../../components/ClassCartCard';
 import NofiticationCard from '../../../components/NofiticationCard';
 import { getAllAttendanceClass } from '../../../api/teacher';
+import { TimeContext } from '../../../context/TimeContext';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -28,7 +29,8 @@ const noficationListDefault = [
 
 export default function HomeScreen({ navigation }) {
 
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const { time } = useContext(TimeContext)
+  const [currentTime, setCurrentTime] = useState(new Date(time));
   const [searchValue, setSearchValue] = useState("")
   const [classList, setClassList] = useState([])
   const [noficationList, setNoficationList] = useState(noficationListDefault)
@@ -39,29 +41,6 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => {
     loadClassData()
   }, [])
-
-  useEffect(() => {
-    const loadTime = async () => {
-      try {
-        const response = await getRealTime();
-        const parsedTime = new Date(response);
-        const updatedTime = new Date(parsedTime.getTime() + 1000); // Adding one second
-        setCurrentTime(updatedTime);
-      } catch (error) {
-        console.error('Error fetching time:', error);
-      }
-    };
-
-    // Initial load
-    loadTime();
-
-    // Update time every second
-    const intervalId = setInterval(() => {
-      loadTime()
-    }, 60000);
-
-    return () => clearInterval(intervalId);
-  }, []);
 
   const loadClassData = async () => {
     const response = await getAllAttendanceClass()
@@ -77,21 +56,21 @@ export default function HomeScreen({ navigation }) {
   }
 
   const hanldeViewWorkSchedule = (item) => {
-    navigation.push("ClassOptionScreen", { classId: item?.classId, date: new Date(), slot: item?.slotOrder, noSession: item?.noSession })
+    navigation.push("ClassOptionScreen", { classId: item?.classId, date: new Date(time), slot: item?.slotOrder, noSession: item?.noSession })
   }
 
   const optionList = [
     {
       label: "Điểm danh",
       onPress: (item) => {
-        navigation.push("AttendanceScreen", { classDetail: item, date: new Date(), slot: item?.slotOrder })
+        navigation.push("AttendanceScreen", { classDetail: item, date: new Date(time), slot: item?.slotOrder })
       }
     },
     {
       label: "Đánh giá",
       onPress: (item) => {
         // console.log(item?.date);
-        navigation.push("RateStudentScreen", { classDetail: item, date: new Date(), noSession: item?.noSession })
+        navigation.push("RateStudentScreen", { classDetail: item, date: new Date(time), noSession: item?.noSession })
       }
     },
   ]

@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { dayContrants } from "../constants/day";
+import { TimeContext } from "../context/TimeContext";
 
 export function truncateString(str, maxLength) {
     if (str?.length <= maxLength) {
@@ -138,8 +140,9 @@ export const shortedTime = (time) => {
 }
 
 export const checkCurrentDate = (dateString) => {
+    const { time } = useContext(TimeContext)
     const givenDate = new Date(dateString);
-    const currentDate = new Date();
+    const currentDate = new Date(time);
 
     return givenDate.toDateString() === currentDate.toDateString();
 }
@@ -194,8 +197,9 @@ export function convertSchedulesToString(schedules) {
 }
 
 export function getSessionInfoByDate(syllabusInformations) {
+    const { time } = useContext(TimeContext)
     const syllabus = syllabusInformations;
-    const currentDate = new Date();
+    const currentDate = new Date(time);
 
     // Iterate through topics
     for (const topic of syllabus?.topics) {
@@ -220,8 +224,9 @@ export function getSessionInfoByDate(syllabusInformations) {
 }
 
 export function isDateInPast(dateString) {
+    const { time } = useContext(TimeContext)
     const dateToCompare = new Date(dateString);
-    const currentDate = new Date();
+    const currentDate = new Date(time);
     return dateToCompare < currentDate;
 }
 

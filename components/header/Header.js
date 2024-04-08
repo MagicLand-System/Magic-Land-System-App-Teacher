@@ -1,40 +1,17 @@
 import { View, Text, TouchableOpacity, ScrollView, Dimensions, StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-import defaultAvt from "../../assets/header/defaultAvt.png"
 import { constants } from '../../constants/constants';
-import { getRealTime } from '../../api/auth';
+import { TimeContext } from '../../context/TimeContext';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 export default function Header({ goback, navigation, background, title }) {
 
-    const [currentTime, setCurrentTime] = useState(new Date());
-
-    useEffect(() => {
-        const loadTime = async () => {
-            try {
-                const response = await getRealTime();
-                const parsedTime = new Date(response);
-                const updatedTime = new Date(parsedTime.getTime() + 1000); // Adding one second
-                setCurrentTime(updatedTime);
-            } catch (error) {
-                console.error('Error fetching time:', error);
-            }
-        };
-
-        // Initial load
-        loadTime();
-
-        // Update time every second
-        const intervalId = setInterval(() => {
-            loadTime()
-        }, 60000);
-
-        return () => clearInterval(intervalId);
-    }, []);
+    const { time } = useContext(TimeContext)
+    const [currentTime, setCurrentTime] = useState(new Date(time));
 
     return (
         <View style={[styles.container, { backgroundColor: background ? background : constants.background }]}>
