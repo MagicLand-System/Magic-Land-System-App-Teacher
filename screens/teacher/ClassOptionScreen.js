@@ -59,8 +59,8 @@ export default function ClassOptionScreen({ route, navigation }) {
             title: "Chấm điểm bài tập",
             icon: <Icon name={"book"} color={"#4582E6"} size={25} />,
             onClick: () => {
-                navigation.push("RateStudentScreen", { classDetail: classDetail, date: date })
-                // console.log(date);
+                // navigation.push("RateStudentScreen", { classDetail: classDetail, date: date, noSession: noSession })
+                console.log(date);
             }
         },
     ]
@@ -88,8 +88,8 @@ export default function ClassOptionScreen({ route, navigation }) {
                         <ClassOption
                             title={"Đánh giá"}
                             icon={<Icon name={"book"} color={"#4582E6"} size={25} />}
-                            // onClick={() => navigation.push("RateStudentScreen", { classDetail: classDetail, date: date, noSession: noSession })}
-                            
+                        onClick={() => navigation.push("RateStudentScreen", { classDetail: classDetail, date: date, noSession: noSession })}
+
                         />
 
                     </ScrollView>

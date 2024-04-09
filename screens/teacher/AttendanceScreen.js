@@ -43,7 +43,7 @@ export default function AttendanceScreen({ route, navigation }) {
             setStudentList(response?.data?.attendanceInformation)
             setStudentTmpList(response?.data?.attendanceInformation)
         } else {
-
+            console.log(response?.response?.data);
         }
     }
 
