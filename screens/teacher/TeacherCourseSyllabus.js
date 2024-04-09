@@ -7,7 +7,7 @@ import { getSyllabus } from '../../api/course';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../store/selector';
 import { getQuizByClassid } from '../../api/quiz';
-import { compareDates, formatDate } from '../../util/util';
+import { compareDates, formatDate, isDateInPast } from '../../util/util';
 import SpinnerLoading from '../../components/SpinnerLoading';
 
 const WIDTH = Dimensions.get('window').width;
