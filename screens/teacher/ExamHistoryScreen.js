@@ -42,20 +42,27 @@ export default function ExamHistoryScreen({ route }) {
     const navigation = useNavigation()
 
     const [quizData, setQuizData] = useState(route?.params?.quizData?.examInfors[0])
-    const studentDetail = route?.params?.quizData
+    const [studentDetail, setStudentDetail] = useState(route?.params?.quizData)
     const quizType = route?.params?.quizType
     const quizHistory = route?.params?.quizData?.examInfors[0]?.studentWorkResult
     const focusIndex = route?.params?.focusIndex
     const handleChangeStudentRate = route.params?.handleChangeStudentRate
     const [modalVisible, setModalVisible] = useState({ chooseRate: false })
-
+    // console.log(quizData?.examStatus);
     // const [quizHistory, setQuizHistory] = useState()
+
+    useEffect(() => {
+        setStudentDetail(route?.params?.quizData)
+    }, [route?.params?.quizData])
+
     const goback = () => {
 
         navigation.pop()
     }
 
     const handleChooseRate = (rate) => {
+        setStudentDetail({ ...studentDetail, status: rate })
+        // studentDetail?.status
         setQuizData({ ...quizData, examStatus: rate })
         setModalVisible({ ...modalVisible, chooseRate: false })
         handleChangeStudentRate(rate, focusIndex, studentDetail?.studentId)
@@ -154,10 +161,10 @@ export default function ExamHistoryScreen({ route }) {
                 <TouchableOpacity style={styles.titleView} onPress={() => setModalVisible({ ...modalVisible, chooseRate: true })}>
                     <Text style={styles.title}>Đánh giá của giáo viên: </Text>
                     {
-                        rateList.find(obj => obj.eng.toLowerCase() === (quizData?.examStatus ? quizData?.examStatus : studentDetail?.note)?.toLowerCase()) ?
-                            <Text >{rateList.find(obj => obj.eng.toLowerCase() === (quizData?.examStatus ? quizData?.examStatus : studentDetail?.note)?.toLowerCase())?.vn}</Text>
-                            : quizData.examStatus ?
-                                <Text >{quizData.examStatus}</Text>
+                        rateList.find(obj => obj.eng.toLowerCase() === (studentDetail?.status ? studentDetail?.status : studentDetail?.note)?.toLowerCase()) ?
+                            <Text >{rateList.find(obj => obj.eng.toLowerCase() === (studentDetail?.status ? studentDetail?.status : studentDetail?.note)?.toLowerCase())?.vn}</Text>
+                            : studentDetail?.status ?
+                                <Text >{studentDetail?.status}</Text>
                                 :
                                 <Text >Chưa đánh giá</Text>
                     }
@@ -166,7 +173,7 @@ export default function ExamHistoryScreen({ route }) {
             </ScrollView >
             <ChooseRateModal
                 visible={modalVisible.chooseRate}
-                rate={quizData?.examStatus ? quizData?.examStatus : studentDetail?.note}
+                rate={studentDetail?.status ? studentDetail?.status : quizData?.examStatus ? quizData?.examStatus : studentDetail?.note}
                 onCancle={() => setModalVisible({ ...modalVisible, chooseRate: false })}
                 handleChangeStudentRate={handleChooseRate}
             />
