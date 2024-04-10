@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { getAttendanceList, getAttendanceListByDate, getExamResult, takeAttendance } from '../../api/teacher';
 import { checkCurrentDate } from '../../util/util';
 import InputScoreModal from '../../components/modal/InputScoreModal';
-import { saveOffLineScore } from '../../api/quiz';
+import { saveOffLineScore, saveOnLineEvaluate } from '../../api/quiz';
 import ChooseRateModal from '../../components/modal/ChooseRateModal';
 
 const WIDTH = Dimensions.get('window').width;
@@ -58,7 +58,7 @@ export default function ExamResultScreen({ route, navigation }) {
 
     const loadStudentData = async () => {
         const response = await getExamResult({ classId: classDetail.classId, examIdList: [quizData?.examId] })
-        // console.log(classDetail.classId, [quizData?.examId]);
+        console.log(classDetail.classId, [quizData?.examId]);
         if (response?.status === 200) {
             const data = response?.data?.map((item) => {
                 return {
@@ -74,19 +74,20 @@ export default function ExamResultScreen({ route, navigation }) {
         }
     }
 
-    const handleChangeStudentInfor = (score, note) => {
+    const handleChangeStudentInfor = (score, note,) => {
+
         const updateArray = JSON.parse(JSON.stringify(studentTmpList))
         // const updateArray = [...studentList]
         if (updateArray[focusStudentIndex]) {
             updateArray[focusStudentIndex].score = score;
             updateArray[focusStudentIndex].status = note;
         }
-        console.log(updateArray[focusStudentIndex]);
         setStudentTmpList(updateArray)
         setModalVisible({ ...modalVisible, editStudenInfor: false })
+
     }
 
-    const handleChangeStudentRate = async (note, focusIndex) => {
+    const handleChangeStudentRate = async (note, focusIndex, studentId) => {
         const updateArray = JSON.parse(JSON.stringify(studentTmpList))
         // const updateArray = [...studentList]
         if (updateArray[focusIndex]) {
@@ -94,7 +95,16 @@ export default function ExamResultScreen({ route, navigation }) {
         }
         setStudentList(updateArray)
         setModalVisible({ ...modalVisible, editStudenInfor: false, chooseRate: false })
-        await handleCompleteAttend()
+        if (studentId) {
+            const response = await saveOnLineEvaluate(studentId, quizData?.examId, note)
+            console.log("saveOnLineEvaluate : ", studentId, quizData?.examId, note);
+            if (response?.status === 200) {
+                console.log("saveOnLineEvaluate complete");
+            }
+        } else {
+            await handleCompleteAttend()
+        }
+
     }
 
     const handleChangeStudentRate2 = async (note, focusIndex) => {
@@ -103,7 +113,6 @@ export default function ExamResultScreen({ route, navigation }) {
         if (updateArray[focusIndex]) {
             updateArray[focusIndex].status = note;
         }
-        console.log(updateArray[focusIndex]);
         setStudentList(updateArray)
         setStudentTmpList(updateArray)
         setModalVisible({ ...modalVisible, chooseRate: false })
@@ -111,7 +120,6 @@ export default function ExamResultScreen({ route, navigation }) {
 
     const handleCompleteAttend = async () => {
         const response = await saveOffLineScore(classDetail?.classId, quizData?.examId, studentTmpList)
-        console.log(classDetail?.classId, quizData?.examId, studentTmpList);
         if (response?.status === 200) {
             setStudentList(JSON.parse(JSON.stringify(studentTmpList)))
             setEdittingMode(false)
@@ -135,6 +143,7 @@ export default function ExamResultScreen({ route, navigation }) {
 
         const studentIndex = studentList?.findIndex(obj => obj?.studentId === student?.studentId)
         setFocusStudentIndex(studentIndex)
+
         if (quizData?.quizType !== "offline") {
             if (studentList[studentIndex] && studentList[studentIndex]?.examInfors[0]) {
                 navigation.push("ExamHistoryScreen",

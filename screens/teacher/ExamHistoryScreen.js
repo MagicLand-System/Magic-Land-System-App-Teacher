@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Header from '../../components/header/Header';
 import { useNavigation } from '@react-navigation/native';
 import ChooseRateModal from '../../components/modal/ChooseRateModal';
+import { saveOffLineScore, saveOnLineEvaluate } from '../../api/quiz';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -57,9 +58,8 @@ export default function ExamHistoryScreen({ route }) {
     const handleChooseRate = (rate) => {
         setQuizData({ ...quizData, examStatus: rate })
         setModalVisible({ ...modalVisible, chooseRate: false })
-        handleChangeStudentRate(rate, focusIndex)
+        handleChangeStudentRate(rate, focusIndex, studentDetail?.studentId)
     }
-
 
     const getColumnColor = (item) => {
         return item?.multipleChoiceAnswerResult?.studentAnswerId === item?.multipleChoiceAnswerResult?.correctAnswerId

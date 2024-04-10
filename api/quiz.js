@@ -42,3 +42,23 @@ export const saveMultipleChoiceScore = async (ClassId, ExamId, answerList) => {
         return error;
     }
 };
+
+export const saveOffLineScore = async (ClassId, ExamId, studentList) => {
+    try {
+        const response = await api.post(`/api/v1/exam/quiz/offLine/grade?ClassId=${ClassId}&ExamId=${ExamId}`, studentList);
+        return response;
+    } catch (error) {
+        console.log("saveOffLineScore in api/quiz.js error : " + error + ", data : " + error?.response?.data);
+        return error;
+    }
+};
+
+export const saveOnLineEvaluate = async (studentId, examId, status) => {
+    try {
+        const response = await api.post(`/api/v1/exam/quiz/onLine/evaluate?studentId=${studentId}&examId=${examId}&status=${status}`);
+        return response;
+    } catch (error) {
+        console.log("saveOnLineEvaluate in api/quiz.js error : " + error + ", data : " + error?.response?.data);
+        return error;
+    }
+};

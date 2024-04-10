@@ -27,7 +27,7 @@ export default function Header({ goback, navigation, background, title }) {
                 {title}
             </Text>
             {/* {currentTime?.getHours()}:{currentTime?.getMinutes()} {currentTime?.getHours() > 12 ? "PM" : "AM"}  */}
-            <Text style={styles.timeText}> {currentTime?.getDate()}/{currentTime?.getMonth() + 1}/{currentTime?.getFullYear() + 1}</Text>
+            <Text style={styles.timeText}> {currentTime?.getDate()}/{currentTime?.getMonth() + 1}/{currentTime?.getFullYear()}</Text>
         </View>
     )
 }
