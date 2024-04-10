@@ -130,6 +130,7 @@ export default function ExamResultScreen({ route, navigation }) {
     }
 
     const handleChangeStudentRate2 = async (note, focusIndex) => {
+        console.log("getin");
         const updateArray = JSON.parse(JSON.stringify(studentTmpList))
         // const updateArray = [...studentList]
         if (updateArray[focusIndex]) {
@@ -137,7 +138,10 @@ export default function ExamResultScreen({ route, navigation }) {
         }
         setStudentList(updateArray)
         setStudentTmpList(updateArray)
+        setStudentList(updateArray)
         setModalVisible({ ...modalVisible, chooseRate: false })
+        // console.log(studentList[focusStudentIndex]);
+        // console.log("studentTmpList ", studentTmpList[focusStudentIndex]);
     }
 
     const handleCompleteAttend = async () => {
@@ -160,7 +164,7 @@ export default function ExamResultScreen({ route, navigation }) {
         setStudentTmpList(JSON.parse(JSON.stringify(studentList)))
         setEdittingMode(true)
     }
-
+    
     const handlePressOnStudent = (student) => {
 
         const studentIndex = studentList?.findIndex(obj => obj?.studentId === student?.studentId)
