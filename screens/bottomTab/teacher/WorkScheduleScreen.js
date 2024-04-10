@@ -145,7 +145,6 @@ export default function WorkScheduleScreen({ navigation }) {
               <Agenda
                 onDayPress={(date) => {
                   setDateSelected(date.dateString)
-                  handleClassNavigate(item)
                 }}
                 selected={dateSelected}
                 items={

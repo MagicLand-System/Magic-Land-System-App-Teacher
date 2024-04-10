@@ -52,3 +52,13 @@ export const saveOffLineScore = async (ClassId, ExamId, studentList) => {
         return error;
     }
 };
+
+export const saveOnLineEvaluate = async (studentId, examId, status) => {
+    try {
+        const response = await api.post(`/api/v1/exam/quiz/onLine/evaluate?studentId=${studentId}&examId=${examId}&status=${status}`);
+        return response;
+    } catch (error) {
+        console.log("saveOnLineEvaluate in api/quiz.js error : " + error + ", data : " + error?.response?.data);
+        return error;
+    }
+};
