@@ -88,7 +88,6 @@ export default function ExamResultScreen({ route, navigation }) {
             updateArray[focusStudentIndex].score = score;
             updateArray[focusStudentIndex].status = note;
         }
-        console.log(updateArray[focusStudentIndex]);
         setStudentTmpList(updateArray)
         setModalVisible({ ...modalVisible, editStudenInfor: false })
 
@@ -136,7 +135,6 @@ export default function ExamResultScreen({ route, navigation }) {
         if (updateArray[focusIndex]) {
             updateArray[focusIndex].status = note;
         }
-        console.log(updateArray[focusIndex]);
         setStudentList(updateArray)
         setStudentTmpList(updateArray)
         setModalVisible({ ...modalVisible, chooseRate: false })
