@@ -1,6 +1,7 @@
 import { View, Text, Image, TouchableOpacity, Dimensions, ScrollView, StyleSheet, Modal } from 'react-native'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import React, { useEffect, useState } from 'react'
+import { TextInput } from 'react-native';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -34,7 +35,11 @@ const rateList = [
 
 export default function ChooseRateModal({ visible, handleChangeStudentRate, rate, onCancle }) {
 
-    const [choosedRate, setChoosedRate] = useState("")
+    const [choosedRate, setChoosedRate] = useState(rate ? rate : "")
+
+    useEffect(() => {
+        setChoosedRate(rate)
+    }, [rate])
 
     return (
         <Modal
@@ -51,7 +56,23 @@ export default function ChooseRateModal({ visible, handleChangeStudentRate, rate
 
                         }}
                     >
-                        <Text
+                        <TextInput
+                            value={
+                                rateList.find(obj => obj.eng.toLowerCase() === choosedRate?.toLowerCase()) ?
+                                    rateList.find(obj => obj.eng.toLowerCase() === choosedRate?.toLowerCase())?.vn
+                                    : choosedRate
+                            }
+                            onChangeText={setChoosedRate}
+                            style={{
+                                color: "#4582E6",
+                                textAlign: "center",
+                                fontWeight: "600",
+                                fontSize: 18
+                            }}
+                            placeholder={"Chưa đánh giá"}
+                            placeholderTextColor="#B8B8D2"
+                        />
+                        {/* <Text
                             style={{
                                 color: "#4582E6",
                                 textAlign: "center",
@@ -66,8 +87,8 @@ export default function ChooseRateModal({ visible, handleChangeStudentRate, rate
                                         :
                                         "Chưa đánh giá"
                             }
-                            {/* {rateList.find(obj => obj.eng.toLowerCase() === rate?.toLowerCase())?.vn} */}
-                        </Text>
+                            {rateList.find(obj => obj.eng.toLowerCase() === rate?.toLowerCase())?.vn}
+                        </Text> */}
                     </View>
                     <View style={styles.contentList}>
                         {

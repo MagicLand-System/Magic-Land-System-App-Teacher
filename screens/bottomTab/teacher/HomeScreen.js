@@ -100,7 +100,7 @@ export default function HomeScreen({ navigation }) {
           }
         </View>
         <View style={styles.titleView}>
-          <Text style={styles.title}>Lớp học hôm nay:</Text>
+          <Text style={styles.title}>Lớp học tiếp theo:</Text>
         </View>
         <ScrollView style={styles.classList}>
           {

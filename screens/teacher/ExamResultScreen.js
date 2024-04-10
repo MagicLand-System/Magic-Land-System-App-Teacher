@@ -2,6 +2,7 @@ import { View, Text, Image, StyleSheet, Dimensions, TextInput, ScrollView, Touch
 import React, { useEffect, useState } from 'react'
 import Header from '../../components/header/Header';
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { useFocusEffect } from '@react-navigation/native';
 
 import { getAttendanceList, getAttendanceListByDate, getExamResult, takeAttendance } from '../../api/teacher';
 import { checkCurrentDate } from '../../util/util';
@@ -55,6 +56,12 @@ export default function ExamResultScreen({ route, navigation }) {
         loadStudentData()
     }, [route.params.classDetail])
 
+    // useFocusEffect(
+    //     React.useCallback(() => {
+    //         console.log(studentList[focusStudentIndex]?.status);
+    //     }, [])
+    // );
+    
 
     const loadStudentData = async () => {
         const response = await getExamResult({ classId: classDetail.classId, examIdList: [quizData?.examId] })
@@ -94,6 +101,7 @@ export default function ExamResultScreen({ route, navigation }) {
             updateArray[focusIndex].status = note;
         }
         setStudentList(updateArray)
+        setStudentTmpList(updateArray)
         setModalVisible({ ...modalVisible, editStudenInfor: false, chooseRate: false })
         if (studentId) {
             const response = await saveOnLineEvaluate(studentId, quizData?.examId, note)
@@ -108,14 +116,18 @@ export default function ExamResultScreen({ route, navigation }) {
     }
 
     const handleChangeStudentRate2 = async (note, focusIndex) => {
+        console.log("getin");
         const updateArray = JSON.parse(JSON.stringify(studentTmpList))
         // const updateArray = [...studentList]
         if (updateArray[focusIndex]) {
             updateArray[focusIndex].status = note;
         }
-        setStudentList(updateArray)
+
         setStudentTmpList(updateArray)
+        setStudentList(updateArray)
         setModalVisible({ ...modalVisible, chooseRate: false })
+        // console.log(studentList[focusStudentIndex]);
+        // console.log("studentTmpList ", studentTmpList[focusStudentIndex]);
     }
 
     const handleCompleteAttend = async () => {
@@ -138,7 +150,7 @@ export default function ExamResultScreen({ route, navigation }) {
         setStudentTmpList(JSON.parse(JSON.stringify(studentList)))
         setEdittingMode(true)
     }
-
+    
     const handlePressOnStudent = (student) => {
 
         const studentIndex = studentList?.findIndex(obj => obj?.studentId === student?.studentId)
