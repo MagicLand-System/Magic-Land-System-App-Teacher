@@ -1,10 +1,11 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { convertSchedulesToString, formatDate, formatPrice, getVnDay, shortedTime } from '../util/util';
 import defaultImage from "../assets/classCard/classicMath.png"
 import { courseSelector } from '../store/selector';
 import { useSelector } from 'react-redux';
+import { TimeContext } from '../context/TimeContext';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -17,6 +18,8 @@ const colorList = [
 ]
 
 export default function ClassCartCard({ cardDetail, check, index, onClick, background, priceHidden, timeType, buttonList }) {
+
+    const { time } = useContext(TimeContext)
 
     return (
         <TouchableOpacity style={styles.container} onPress={() => { onClick(cardDetail?.classId) }} key={index}>
@@ -78,7 +81,7 @@ export default function ClassCartCard({ cardDetail, check, index, onClick, backg
                     <Text style={{ fontSize: 10, color: "#4F4F4F", marginVertical: 5 }}>Lớp: {cardDetail?.classCode} - <Text style={{ fontSize: 12, color: "#4F4F4F", textTransform: "capitalize" }}>{cardDetail?.method}</Text></Text>
                     <View style={styles.flexColumn}>
                         <Icon name={"calendar-check"} color={"#241468"} size={15} />
-                        <Text style={styles.cardDetailText}>{formatDate(cardDetail?.startDate ? cardDetail?.startDate : cardDetail?.date)}</Text>
+                        <Text style={styles.cardDetailText}>{formatDate(time)}</Text>
                     </View>
                     <View style={{ ...styles.flexColumn, marginVertical: 5 }}>
                         <Icon name={"clock-time-three-outline"} color={"#241468"} size={15} />
