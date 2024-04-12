@@ -31,7 +31,12 @@ export default function Header({ goback, navigation, background, title }) {
                 {title}
             </Text>
             {/* {currentTime?.getHours()}:{currentTime?.getMinutes()} {currentTime?.getHours() > 12 ? "PM" : "AM"}  */}
-            <Text style={styles.timeText}> {currentTime?.getDate()}/{currentTime?.getMonth() + 1}/{currentTime?.getFullYear()}</Text>
+            {/* <Text style={styles.timeText}> {currentTime?.getDate()}/{currentTime?.getMonth() + 1}/{currentTime?.getFullYear()}</Text> */}
+            <View style={styles.timeContainer}>
+                <Text style={styles.timeText}>{currentTime?.getHours()}:{currentTime?.getMinutes() > 9 ? currentTime?.getMinutes() : "0" + currentTime?.getMinutes()} {currentTime?.getHours() > 12 ? "PM" : "AM"}</Text>
+                <Text style={styles.timeText}>{currentTime?.getDate()}/{currentTime?.getMonth() + 1}/{currentTime?.getFullYear()}</Text>
+                {/* {currentTime?.getHours()}:{currentTime?.getMinutes()} */}
+            </View>
         </View>
     )
 }
@@ -62,10 +67,12 @@ const styles = StyleSheet.create({
         fontSize: 18,
         textAlign: "center",
     },
-    timeText: {
+    timeContainer: {
         position: "absolute",
-        color: "white",
-        bottom: "40%",
+        bottom: "20%",
         right: 5
+    },
+    timeText: {
+        color: "white",
     }
 });
