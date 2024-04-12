@@ -85,7 +85,7 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.header}>
           <View style={{ ...styles.flexBetweenColumn, paddingHorizontal: 20 }}>
             <View style={styles.headerInforLeft}>
-              <Text style={{ color: "white" }}>Xin chào!  {currentTime?.getDate()}/{currentTime?.getMonth() + 1}/{currentTime?.getFullYear() + 1}</Text>
+              <Text style={{ color: "white" }}>Xin chào!   {currentTime?.getHours()}:{currentTime?.getMinutes() > 9 ? currentTime?.getMinutes() : "0" + currentTime?.getMinutes()} {currentTime?.getHours() > 12 ? "PM" : "AM"} {currentTime?.getDate()}/{currentTime?.getMonth() + 1}/{currentTime?.getFullYear() + 1}</Text>
               <Text style={{ fontWeight: "700", fontSize: 18, color: "white" }}>GV: {user.fullName}</Text>
             </View>
             <View style={styles.headerInforRight}>

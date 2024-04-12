@@ -19,9 +19,9 @@ export default function WorkScheduleScreen({ navigation }) {
   const [dateSelected, setDateSelected] = useState(new Date(time));
   const [calendarType, setCalendarType] = useState("month")
 
-  useEffect(() => {
-    setDateSelected(new Date(time))
-  }, [time])
+  // useEffect(() => {
+  //   setDateSelected(new Date(time))
+  // }, [time])
 
   LocaleConfig.locales['fr'] = {
     // 'Tháng 1','Tháng 2','Tháng 3','Tháng 5','Tháng 7','Tháng 9','Tháng 11','Tháng 12'
@@ -162,7 +162,7 @@ export default function WorkScheduleScreen({ navigation }) {
                   </TouchableOpacity>
                 )}
               />
-              <View style={styles.noteView}>
+              {/* <View style={styles.noteView}>
                 <View style={{ ...styles.noteHaft, backgroundColor: "#F6F2E5" }}>
                   <Text style={styles.noteTitle}>Ngày nghỉ</Text>
                   <View style={styles.flexColumn}>
@@ -185,7 +185,7 @@ export default function WorkScheduleScreen({ navigation }) {
                     <Text >Tối</Text>
                   </View>
                 </View>
-              </View>
+              </View> */}
             </>
           }
 
