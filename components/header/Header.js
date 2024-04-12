@@ -13,6 +13,10 @@ export default function Header({ goback, navigation, background, title }) {
     const { time } = useContext(TimeContext)
     const [currentTime, setCurrentTime] = useState(new Date(time));
 
+    useEffect(() => {
+        setCurrentTime(new Date(time))
+    }, [time])
+
     return (
         <View style={[styles.container, { backgroundColor: background ? background : constants.background }]}>
             <TouchableOpacity

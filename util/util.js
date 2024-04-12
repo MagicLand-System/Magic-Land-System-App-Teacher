@@ -139,8 +139,7 @@ export const shortedTime = (time) => {
     return timeComponents[0] + ":" + timeComponents[1];
 }
 
-export const checkCurrentDate = (dateString) => {
-    const { time } = useContext(TimeContext)
+export const checkCurrentDate = (dateString, time) => {
     const givenDate = new Date(dateString);
     const currentDate = new Date(time);
 
@@ -196,8 +195,8 @@ export function convertSchedulesToString(schedules) {
     return formattedSchedules;
 }
 
-export function getSessionInfoByDate(syllabusInformations) {
-    const { time } = useContext(TimeContext)
+export function getSessionInfoByDate(syllabusInformations, time) {
+    // const { time } = useContext(TimeContext)
     const syllabus = syllabusInformations;
     const currentDate = new Date(time);
 
@@ -223,8 +222,8 @@ export function getSessionInfoByDate(syllabusInformations) {
     }
 }
 
-export function isDateInPast(dateString) {
-    const { time } = useContext(TimeContext)
+export function isDateInPast(dateString, time) {
+    // const { time } = useContext(TimeContext)
     const dateToCompare = new Date(dateString);
     const currentDate = new Date(time);
     return dateToCompare < currentDate;

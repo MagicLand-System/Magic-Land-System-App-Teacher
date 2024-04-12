@@ -42,6 +42,10 @@ export default function HomeScreen({ navigation }) {
     loadClassData()
   }, [])
 
+  useEffect(() => {
+    setCurrentTime(new Date(time))
+  }, [time])
+
   const loadClassData = async () => {
     const response = await getAllAttendanceClass()
     if (response?.status === 200) {

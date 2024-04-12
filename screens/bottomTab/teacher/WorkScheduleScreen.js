@@ -19,6 +19,10 @@ export default function WorkScheduleScreen({ navigation }) {
   const [dateSelected, setDateSelected] = useState(new Date(time));
   const [calendarType, setCalendarType] = useState("month")
 
+  useEffect(() => {
+    setDateSelected(new Date(time))
+  }, [time])
+
   LocaleConfig.locales['fr'] = {
     // 'Tháng 1','Tháng 2','Tháng 3','Tháng 5','Tháng 7','Tháng 9','Tháng 11','Tháng 12'
     monthNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 5', 'Tháng 7', 'Tháng 9', 'Tháng 11', 'Tháng 12'],
