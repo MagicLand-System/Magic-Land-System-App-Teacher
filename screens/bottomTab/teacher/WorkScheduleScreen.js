@@ -25,7 +25,7 @@ export default function WorkScheduleScreen({ navigation }) {
 
   LocaleConfig.locales['fr'] = {
     // 'Tháng 1','Tháng 2','Tháng 3','Tháng 5','Tháng 7','Tháng 9','Tháng 11','Tháng 12'
-    monthNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 5', 'Tháng 7', 'Tháng 9', 'Tháng 11', 'Tháng 12'],
+    monthNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
     monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
     dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
     dayNamesShort: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
