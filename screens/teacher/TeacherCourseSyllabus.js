@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Header from '../../components/header/Header';
@@ -9,6 +9,7 @@ import { userSelector } from '../../store/selector';
 import { getQuizByClassid } from '../../api/quiz';
 import { compareDates, formatDate, isDateInPast } from '../../util/util';
 import SpinnerLoading from '../../components/SpinnerLoading';
+import { TimeContext } from '../../context/TimeContext';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -17,6 +18,7 @@ export default function TeacherCourseSyllabus({ route, navigation }) {
 
     const user = useSelector(userSelector)
     const courseItem = route?.params?.courseDetail
+    const { time } = useContext(TimeContext)
     const [courseSyllabus, setCourseSyllabus] = useState({})
     const [quizList, setQuizList] = useState([])
     const [loading, setLoading] = useState(true)
@@ -142,7 +144,7 @@ export default function TeacherCourseSyllabus({ route, navigation }) {
                                                                                         item.expand === true &&
                                                                                         <View style={{ ...styles.flexColumn }}>
                                                                                             {
-                                                                                                isDateInPast(element?.date) ?
+                                                                                                isDateInPast(element?.date, time) ?
                                                                                                     <Icon name={"checkbox-marked-circle-outline"} color={"#888888"} size={22} />
                                                                                                     :
                                                                                                     <Icon name={"checkbox-blank-circle-outline"} color={"#888888"} size={22} />

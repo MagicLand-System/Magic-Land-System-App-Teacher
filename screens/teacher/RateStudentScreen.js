@@ -1,9 +1,10 @@
 import { View, Text, Image, StyleSheet, Dimensions, TextInput, ScrollView, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../components/header/Header';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { getAttendanceList, getEvaluatesList, takeEvaluates } from '../../api/teacher';
 import { checkCurrentDate } from '../../util/util';
+import { TimeContext } from '../../context/TimeContext';
 
 // import unhappyIcon from "../../../assets/rateIcon/unhapppyIcon.png"
 // import happyIcon from "../../../assets/rateIcon/happyIcon.png"
@@ -13,9 +14,11 @@ const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 export default function RateStudentScreen({ route, navigation }) {
+
   const classDetail = route.params.classDetail
   const noSession = route.params.noSession
   const date = route.params.date
+  const { time } = useContext(TimeContext)
   const [studentList, setStudentList] = useState([])
   const [studentTmpList, setStudentTmpList] = useState([])
   const [searchValue, setSearchValue] = useState("")
@@ -165,7 +168,7 @@ export default function RateStudentScreen({ route, navigation }) {
         <View style={{ height: 40 }} />
       </ScrollView>
       {
-        (!editMode && studentList[0] && checkCurrentDate(date)) &&
+        (!editMode && studentList[0] && checkCurrentDate(date, time)) &&
         <TouchableOpacity style={{ ...styles.editButton, bottom: editMode ? HEIGHT * 0.15 : HEIGHT * 0.05 }} onPress={handleSetEditing}>
           <Icon name={"circle-edit-outline"} color={"white"} size={28} />
         </TouchableOpacity>
