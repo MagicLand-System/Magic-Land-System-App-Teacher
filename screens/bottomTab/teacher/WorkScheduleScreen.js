@@ -8,6 +8,7 @@ import { getWorkSchedule } from '../../../api/teacher';
 import { formatTime, shortedTime } from '../../../util/util';
 import ClassCartCard from '../../../components/ClassCartCard';
 import { TimeContext } from '../../../context/TimeContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -33,9 +34,15 @@ export default function WorkScheduleScreen({ navigation }) {
   };
   LocaleConfig.defaultLocale = 'fr';
 
-  useEffect(() => {
-    loadScheduleData()
-  }, [])
+  // useEffect(() => {
+  //   loadScheduleData()
+  // }, [])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadScheduleData()
+    }, [])
+);
 
   const loadScheduleData = async () => {
     const response = await getWorkSchedule()
