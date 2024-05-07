@@ -79,6 +79,18 @@ export default function ExamHistoryScreen({ route }) {
                 <View style={styles.titleView}>
                     <Text style={styles.title}>{quizData?.quizName}</Text>
                 </View>
+                <TouchableOpacity style={styles.titleView} onPress={() => setModalVisible({ ...modalVisible, chooseRate: true })}>
+                    <Text style={styles.title}>Đánh giá của giáo viên: </Text>
+                    {
+                        rateList.find(obj => obj.eng.toLowerCase() === (studentDetail?.status ? studentDetail?.status : studentDetail?.note)?.toLowerCase()) ?
+                            <Text >{rateList.find(obj => obj.eng.toLowerCase() === (studentDetail?.status ? studentDetail?.status : studentDetail?.note)?.toLowerCase())?.vn}</Text>
+                            : studentDetail?.status ?
+                                <Text >{studentDetail?.status}</Text>
+                                :
+                                <Text >Chưa đánh giá</Text>
+                    }
+                    {/* <Text> {rateList.find(obj => obj.eng.toLowerCase() === (quizData?.examStatus ? quizData?.examStatus : studentDetail?.note)?.toLowerCase())?.vn}</Text> */}
+                </TouchableOpacity>
                 {
                     quizType === "multiple-choice" &&
                     <View style={styles.questionTable}>
@@ -158,18 +170,7 @@ export default function ExamHistoryScreen({ route }) {
                     <Text style={styles.boldText}>{quizData?.noAttemp} lần</Text>
                 </View>
 
-                <TouchableOpacity style={styles.titleView} onPress={() => setModalVisible({ ...modalVisible, chooseRate: true })}>
-                    <Text style={styles.title}>Đánh giá của giáo viên: </Text>
-                    {
-                        rateList.find(obj => obj.eng.toLowerCase() === (studentDetail?.status ? studentDetail?.status : studentDetail?.note)?.toLowerCase()) ?
-                            <Text >{rateList.find(obj => obj.eng.toLowerCase() === (studentDetail?.status ? studentDetail?.status : studentDetail?.note)?.toLowerCase())?.vn}</Text>
-                            : studentDetail?.status ?
-                                <Text >{studentDetail?.status}</Text>
-                                :
-                                <Text >Chưa đánh giá</Text>
-                    }
-                    {/* <Text> {rateList.find(obj => obj.eng.toLowerCase() === (quizData?.examStatus ? quizData?.examStatus : studentDetail?.note)?.toLowerCase())?.vn}</Text> */}
-                </TouchableOpacity>
+
             </ScrollView >
             <ChooseRateModal
                 visible={modalVisible.chooseRate}

@@ -51,7 +51,7 @@ export default function ClassOptionScreen({ route, navigation }) {
             title: "Điểm danh",
             icon: <Icon name={"book"} color={"#4582E6"} size={25} />,
             onClick: () => {
-                navigation.push("AttendanceScreen", { classDetail: classDetail, date: date, slot: slot })
+                navigation.push("AttendanceScreen", { classDetail: classDetail, date: new Date(date), slot: slot })
                 // console.log(date);
             }
         },
@@ -88,7 +88,7 @@ export default function ClassOptionScreen({ route, navigation }) {
                         <ClassOption
                             title={"Đánh giá"}
                             icon={<Icon name={"book"} color={"#4582E6"} size={25} />}
-                        onClick={() => navigation.push("RateStudentScreen", { classDetail: classDetail, date: date, noSession: noSession })}
+                            onClick={() => navigation.push("RateStudentScreen", { classDetail: classDetail, date: new Date(date), noSession: noSession })}
 
                         />
 
