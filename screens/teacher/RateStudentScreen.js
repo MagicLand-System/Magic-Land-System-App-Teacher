@@ -30,6 +30,7 @@ export default function RateStudentScreen({ route, navigation }) {
 
   const loadStudentData = async () => {
     const response = await getEvaluatesList(classDetail.classId, noSession);
+    console.log(classDetail.classId, noSession);
     if (response?.status === 200) {
       let data = response?.data;
       data[0].evaludateInfors = data[0].evaludateInfors.map(info => {
