@@ -67,14 +67,13 @@ export default function HomeScreen({ navigation }) {
     {
       label: "Điểm danh",
       onPress: (item) => {
-        navigation.push("AttendanceScreen", { classDetail: item, date: new Date(time), slot: item?.slotOrder })
+        navigation.push("AttendanceScreen", { classDetail: item, date: item?.date, slot: item?.slotOrder })
       }
     },
     {
       label: "Đánh giá",
       onPress: (item) => {
-        // console.log(item?.date);
-        navigation.push("RateStudentScreen", { classDetail: item, date: new Date(time), noSession: item?.noSession })
+        navigation.push("RateStudentScreen", { classDetail: item, date: item?.date, noSession: item?.noSession })
       }
     },
   ]
