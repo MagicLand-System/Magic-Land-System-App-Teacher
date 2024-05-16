@@ -71,7 +71,7 @@ export default function InputScoreModal({ visible, student, score, note, onCancl
             <TouchableOpacity style={styles.layout} />
             <View style={styles.container}>
                 <View style={styles.modalHeader}>
-                    <Text style={styles.modalHeaderText}>Nhập điểm cho học sinh {student?.studentName}</Text>
+                    <Text style={styles.modalHeaderText}>Nhận xét bài tập cho học sinh {student?.studentName}</Text>
                     <TouchableOpacity style={styles.closeButton} onPress={onCancle}>
                         <Icon name={"close"} color={"#794BFF"} size={22} />
                     </TouchableOpacity>
