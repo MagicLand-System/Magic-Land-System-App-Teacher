@@ -73,7 +73,7 @@ export default function ProfileScreen({ navigation }) {
 
   return (
     <>
-      <Header navigation={navigation} title={"Tài khoản"} goback={navigation.goBack} />
+      <Header navigation={navigation} title={"Tài khoản"} goback={navigation.goBack} hiddenBackButton={true} />
       <View style={styles.container}>
         <TouchableOpacity style={styles.userDetail} onPress={() => navigation.navigate("AccountSettingScreen")}>
           <View style={{ ...styles.flexColumnBetween, alignItems: "center", paddingRight: 8 }}>

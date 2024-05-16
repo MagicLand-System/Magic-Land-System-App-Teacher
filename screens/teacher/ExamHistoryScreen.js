@@ -157,6 +157,88 @@ export default function ExamHistoryScreen({ route }) {
                     </View>
                 }
 
+                {
+                    quizData?.quizType === "flashcard" &&
+                    quizHistory?.map((item, key) => {
+                        return (
+                            <React.Fragment key={key}>
+                                <Text style={{ ...styles.boldText, fontSize: 18, marginVertical: 20, marginLeft: 10 }}> Câu hỏi : {item?.questionDescription}</Text>
+                                <View style={styles.questionTable} >
+                                    <View style={styles.columnTable}>
+                                        <View style={styles.numberTable}>
+                                            <Text style={styles.boldText}>STT</Text>
+                                        </View>
+                                        <View style={styles.contentTable}>
+                                            <Text style={styles.boldText}>Nội dung</Text>
+                                        </View>
+                                        {/* <View style={styles.scoreTable}>
+                                            <Text style={styles.boldText}>Điểm</Text>
+                                        </View> */}
+                                    </View>
+                                    {
+                                        item.flashCardAnswerResult.map((element, index) => {
+                                            return (
+                                                <View style={styles.columnTable} key={index}>
+                                                    <View style={styles.numberTable}>
+                                                        <Text style={styles.boldText}>{index + 1}</Text>
+                                                    </View>
+                                                    <View style={[styles.contentTable, styles.flexColumnBetween]}>
+                                                        <View width style={{ width: "80%" }}>
+                                                            {
+                                                                element?.studentFirstCardAnswerImage ?
+                                                                    <>
+                                                                        <Text style={{ ...styles.boldText, color: getColumnColor(item) ? "#2C8535" : "#EA6D6D" }}>Nội dung Thẻ 1 :</Text>
+                                                                        <Image
+                                                                            source={{ uri: element?.studentFirstCardAnswerImage }}
+                                                                            resizeMode="cover"
+                                                                            style={{ width: WIDTH * 0.4, height: WIDTH * 0.4 }}
+                                                                        />
+                                                                    </>
+
+                                                                    :
+                                                                    <Text style={{ ...styles.boldText, color: getColumnColor(item) ? "#2C8535" : "#EA6D6D" }}>Nội dung Thẻ 1 : {element?.studentFirstCardAnswerDecription ? element?.studentFirstCardAnswerDecription : ""}</Text>
+                                                            }
+                                                            <View>
+                                                                {/* <Text style={{ ...styles.boldText, color: getColumnColor(item) ? "#2C8535" : "#EA6D6D" }}>Đáp Án : {item?.multipleChoiceAnswerResult?.correctAnswerDescription}</Text> */}
+
+                                                                {
+                                                                    element?.studentSecondCardAnswerImage ?
+                                                                        <>
+                                                                            <Text style={{ ...styles.boldText, color: getColumnColor(item) ? "#2C8535" : "#EA6D6D" }}>Nội dung Thẻ 2 :</Text>
+                                                                            <Image
+                                                                                source={{ uri: element?.studentSecondCardAnswerImage }}
+                                                                                resizeMode="cover"
+                                                                                style={{ width: WIDTH * 0.4, height: WIDTH * 0.4 }}
+                                                                            />
+                                                                        </>
+                                                                        :
+                                                                        <Text style={{ ...styles.boldText, color: getColumnColor(item) ? "#2C8535" : "#EA6D6D" }}>Nội dung Thẻ 2 : {element?.studentSecondCardAnswerDescription ? element?.studentSecondCardAnswerDescription : ""}</Text>
+                                                                }
+                                                            </View>
+
+                                                        </View>
+
+                                                        {
+                                                            getColumnColor(item) ?
+                                                                <Icon name={"checkbox-marked-outline"} color={"#2C8535"} size={25} />
+                                                                :
+                                                                <Icon name={"close-box-outline"} color={"#EA6D6D"} size={25} />
+                                                        }
+                                                    </View>
+                                                    {/* <View style={styles.scoreTable}>
+                                                        <Text style={{ ...styles.boldText, color: getColumnColor(item) ? "#2C8535" : "#EA6D6D" }}>{element?.score}</Text>
+                                                    </View> */}
+                                                </View>
+                                            )
+                                        })
+                                    }
+                                </View>
+                            </React.Fragment>
+
+                        )
+                    })
+                }
+
                 <View style={{ ...styles.flexColumnBetween, width: WIDTH * 0.8, marginHorizontal: WIDTH * 0.1, marginVertical: 10 }}>
                     <Text style={styles.boldText}>Số câu đúng:</Text>
                     <Text style={styles.boldText}>{quizData?.correctMark} / {quizData?.totalMark}</Text>

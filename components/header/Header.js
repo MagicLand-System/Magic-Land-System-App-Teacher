@@ -8,7 +8,7 @@ import { TimeContext } from '../../context/TimeContext';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
-export default function Header({ goback, navigation, background, title }) {
+export default function Header({ goback, navigation, background, title, hiddenBackButton }) {
 
     const { time } = useContext(TimeContext)
     const [currentTime, setCurrentTime] = useState(new Date(time));
@@ -19,14 +19,17 @@ export default function Header({ goback, navigation, background, title }) {
 
     return (
         <View style={[styles.container, { backgroundColor: background ? background : constants.background }]}>
-            <TouchableOpacity
-                style={styles.backButton}
-                onPress={() => {
-                    goback ? goback() : navigation?.pop();
-                }}
-            >
-                <Icon name={"arrow-back-ios"} color={"white"} size={28} />
-            </TouchableOpacity>
+            {
+                !hiddenBackButton &&
+                <TouchableOpacity
+                    style={styles.backButton}
+                    onPress={() => {
+                        goback ? goback() : navigation?.pop();
+                    }}
+                >
+                    <Icon name={"arrow-back-ios"} color={"white"} size={28} />
+                </TouchableOpacity>
+            }
             <Text style={styles.headerTitle} numberOfLines={1}>
                 {title}
             </Text>

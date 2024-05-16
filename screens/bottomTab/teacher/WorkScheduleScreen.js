@@ -133,7 +133,7 @@ export default function WorkScheduleScreen({ navigation }) {
 
   return (
     <>
-      <Header navigation={navigation} title={"Lich Làm Việc"} goback={() => navigation.navigate("Root")} />
+      <Header navigation={navigation} title={"Lich Làm Việc"} goback={() => navigation.navigate("Root")} hiddenBackButton={true}/>
       <View showsVerticalScrollIndicator={false} style={styles.container}>
         <View style={styles.titleView}>
           <Text style={styles.title}>Lịch học:</Text>
