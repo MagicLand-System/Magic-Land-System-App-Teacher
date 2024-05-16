@@ -164,7 +164,7 @@ export default function ExamResultScreen({ route, navigation }) {
         setStudentTmpList(JSON.parse(JSON.stringify(studentList)))
         setEdittingMode(true)
     }
-    
+
     const handlePressOnStudent = (student) => {
 
         const studentIndex = studentList?.findIndex(obj => obj?.studentId === student?.studentId)
@@ -193,7 +193,7 @@ export default function ExamResultScreen({ route, navigation }) {
             return studentList.filter(student => student.studentName.toLowerCase().includes(search.toLowerCase()));
         }
     }
-
+    
     return (
         <>
             <Header navigation={navigation} title={"Đánh giá bài tập - " + quizData?.quizName} goback={navigation.pop} />
