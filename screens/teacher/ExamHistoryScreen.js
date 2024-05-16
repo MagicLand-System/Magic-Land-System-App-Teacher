@@ -102,7 +102,7 @@ export default function ExamHistoryScreen({ route }) {
                                 <Text style={styles.boldText}>Nội dung</Text>
                             </View>
                             <View style={styles.scoreTable}>
-                                <Text style={styles.boldText}>Điểm</Text>
+                                <Text style={styles.boldText}>Nhận xét bài tập</Text>
                             </View>
                         </View>
                         {

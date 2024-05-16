@@ -198,7 +198,7 @@ export default function ExamResultScreen({ route, navigation }) {
                             <View style={{ ...styles.tableColumn, backgroundColor: "#2414686B" }}>
                                 <Text style={styles.columnNumber}>STT</Text>
                                 <Text style={styles.columnName}>Tên học viên</Text>
-                                <Text style={styles.columnStatus}>Điểm</Text>
+                                <Text style={styles.columnStatus}>Nhận xét bài tập</Text>
                                 <Text style={styles.columnNote}>Đánh giá</Text>
                             </View>
                             {
