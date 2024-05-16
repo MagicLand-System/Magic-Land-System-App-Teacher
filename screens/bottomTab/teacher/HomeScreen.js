@@ -60,7 +60,7 @@ export default function HomeScreen({ navigation }) {
   }
 
   const hanldeViewWorkSchedule = (item) => {
-    navigation.push("ClassOptionScreen", { classId: item?.classId, date: time, slot: item?.slotOrder, noSession: item?.noSession })
+    // navigation.push("ClassOptionScreen", { classId: item?.classId, date: time, slot: item?.slotOrder, noSession: item?.noSession })
   }
 
   const optionList = [
@@ -102,9 +102,12 @@ export default function HomeScreen({ navigation }) {
             </View>
           }
         </View>
-        <View style={styles.titleView}>
-          <Text style={styles.title}>Lớp học tiếp theo:</Text>
-        </View>
+        {
+          classList[0] &&
+          <View style={styles.titleView}>
+            <Text style={styles.title}>Lớp học tiếp theo:</Text>
+          </View>
+        }
         <ScrollView style={styles.classList}>
           {
             classList.map((item, key) => (

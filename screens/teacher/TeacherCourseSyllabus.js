@@ -158,13 +158,13 @@ export default function TeacherCourseSyllabus({ route, navigation }) {
                                                                                                 item.expand === true &&
                                                                                                 <Text style={styles.childText}>Không có chủ đề</Text>
                                                                                                 :
-                                                                                                element?.contents?.map((content, key) => {
+                                                                                                element?.contents?.map((content, key1) => {
                                                                                                     count += 1
                                                                                                     return (
-                                                                                                        <React.Fragment key={key}>
+                                                                                                        <React.Fragment key={key1}>
                                                                                                             {
                                                                                                                 item.expand === true &&
-                                                                                                                <Text style={{ ...styles.childText, marginLeft: 7, fontWeight: "400" }} key={key}>{count}. {content.content}</Text>
+                                                                                                                <Text style={{ ...styles.childText, marginLeft: 7, fontWeight: "400" }}>{count}. {content.content}</Text>
                                                                                                             }
                                                                                                             {
                                                                                                                 item.expand === true &&
