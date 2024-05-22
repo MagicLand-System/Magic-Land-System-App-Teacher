@@ -22,7 +22,7 @@ export default function ClassCartCard({ cardDetail, check, index, onClick, backg
     const { time } = useContext(TimeContext)
 
     return (
-        <TouchableOpacity style={styles.container} onPress={() => { onClick(cardDetail?.classId) }} key={index}>
+        <TouchableOpacity style={styles.container} activeOpacity={1} onPress={() => { onClick(cardDetail?.classId) }} key={index}>
             <View
                 style={{
                     ...styles.card,

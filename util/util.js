@@ -229,3 +229,11 @@ export function isDateInPast(dateString, time) {
     return dateToCompare < currentDate;
 }
 
+export function getNotificateLength(notificateList) {
+    if (!Array.isArray(notificateList)) {
+        return 0;
+    }
+    return notificateList.filter(item => item?.isRead === false).length;
+}
+
+

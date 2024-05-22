@@ -15,6 +15,7 @@ import TeacherCourseSyllabus from '../screens/teacher/TeacherCourseSyllabus';
 import QuizDetailScreen from '../screens/teacher/QuizDetailScreen';
 import ExamResultScreen from '../screens/teacher/ExamResultScreen';
 import ExamHistoryScreen from '../screens/teacher/ExamHistoryScreen';
+import NofiticationScreen from '../screens/teacher/NofiticationScreen';
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { constants } from '../constants/constants';
@@ -64,6 +65,8 @@ const BottomTabNavigator = () => {
             <Tab.Screen name="TeacherCourseSyllabus" component={TeacherCourseSyllabus} options={{ tabBarButton: () => null }} />
             <Tab.Screen name="QuizDetailScreen" component={QuizDetailScreen} options={{ tabBarButton: () => null }} />
             <Tab.Screen name="ExamResultScreen" component={ExamResultScreen} options={{ tabBarButton: () => null }} />
+            <Tab.Screen name="ExamHistoryScreen" component={ExamHistoryScreen} options={{ tabBarButton: () => null }} />
+            <Tab.Screen name="NofiticationScreen" component={NofiticationScreen} options={{ tabBarButton: () => null }} />
         </Tab.Navigator>
     )
 }

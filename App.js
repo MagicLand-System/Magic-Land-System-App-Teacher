@@ -5,18 +5,21 @@ import { store } from './store/store';
 import StackNavigator from './navigation/StackNavigator';
 import { ToastProvider } from 'react-native-toast-notifications'
 import { TimePovider } from './context/TimeContext';
+import { NotificatePovider } from './context/NotificateContext';
 
 export default function App() {
   return (
     <Provider store={store}>
       <ToastProvider>
         <TimePovider>
-          <SafeAreaView style={styles.unsafe} />
-          <View style={styles.container}>
-            <NavigationContainer>
-              <StackNavigator />
-            </NavigationContainer>
-          </View >
+          <NotificatePovider>
+            <SafeAreaView style={styles.unsafe} />
+            <View style={styles.container}>
+              <NavigationContainer>
+                <StackNavigator />
+              </NavigationContainer>
+            </View >
+          </NotificatePovider>
         </TimePovider>
       </ToastProvider>
     </Provider>
