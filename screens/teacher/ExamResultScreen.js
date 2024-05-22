@@ -179,10 +179,10 @@ export default function ExamResultScreen({ route, navigation }) {
             return studentList.filter(student => student.studentName.toLowerCase().includes(search.toLowerCase()));
         }
     }
-    
+
     return (
         <>
-            <Header navigation={navigation} title={quizData?.quizName + " - Chấm điểm"} goback={navigation.pop} />
+            <Header navigation={navigation} title={"Đánh giá bài tập - " + quizData?.quizName} goback={navigation.pop} />
             <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
                 <View style={styles.titleView}>
                     <Text style={styles.title}>Danh sách lớp:</Text>

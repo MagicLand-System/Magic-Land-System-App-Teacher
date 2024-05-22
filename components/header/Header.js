@@ -30,7 +30,7 @@ export default function Header({ goback, navigation, background, title, hiddenBa
                     <Icon name={"arrow-back-ios"} color={"white"} size={28} />
                 </TouchableOpacity>
             }
-            <Text style={styles.headerTitle} numberOfLines={1}>
+            <Text style={styles.headerTitle} numberOfLines={2}>
                 {title}
             </Text>
             {/* {currentTime?.getHours()}:{currentTime?.getMinutes()} {currentTime?.getHours() > 12 ? "PM" : "AM"}  */}
@@ -63,11 +63,11 @@ const styles = StyleSheet.create({
         left: 0,
     },
     headerTitle: {
-        width: "80%",
+        width: "65%",
         paddingVertical: 10,
         color: "white",
         fontWeight: "600",
-        fontSize: 18,
+        fontSize: 16,
         textAlign: "center",
     },
     timeContainer: {

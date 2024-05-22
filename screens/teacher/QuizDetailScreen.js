@@ -59,7 +59,7 @@ export default function QuizDetailScreen({ route, navigation }) {
     const hanldeScoreEditNavigate = () => {
         navigation.push("ExamResultScreen", { classDetail: classInfor, date: classInfor?.date, quizData: quizData })
     }
-
+    
     return (
         <>
             <Header navigation={navigation} goback={navigation.pop} title={quizData?.quizName} />
@@ -114,7 +114,7 @@ export default function QuizDetailScreen({ route, navigation }) {
                                 onPress={() => { hanldeScoreEditNavigate() }}
                             >
                                 <Icon name={"file-document"} color={"#241468"} size={25} />
-                                <Text style={{ ...styles.boldText, color: "#241468", marginLeft: 5 }}>Điểm:</Text>
+                                <Text style={{ ...styles.boldText, color: "#241468", marginLeft: 5 }}>Đánh giá bài tập:</Text>
                             </TouchableOpacity>
                         </View>
 

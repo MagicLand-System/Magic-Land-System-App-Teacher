@@ -21,6 +21,7 @@ import TeacherCourseSyllabus from '../screens/teacher/TeacherCourseSyllabus';
 import QuizDetailScreen from '../screens/teacher/QuizDetailScreen';
 import ExamResultScreen from '../screens/teacher/ExamResultScreen';
 import ExamHistoryScreen from '../screens/teacher/ExamHistoryScreen';
+import NofiticationScreen from '../screens/teacher/NofiticationScreen';
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
@@ -76,6 +77,7 @@ const StackNavigator = () => {
                     <Stack.Screen name="QuizDetailScreen" component={QuizDetailScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="ExamResultScreen" component={ExamResultScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="ExamHistoryScreen" component={ExamHistoryScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="NofiticationScreen" component={NofiticationScreen} options={{ headerShown: false }} />
                 </>
 
             ) : (

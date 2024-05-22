@@ -9,9 +9,15 @@ import { formatTime, shortedTime } from '../../../util/util';
 import ClassCartCard from '../../../components/ClassCartCard';
 import { TimeContext } from '../../../context/TimeContext';
 import { useFocusEffect } from '@react-navigation/native';
+import { format, eachDayOfInterval, parseISO } from 'date-fns';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
+
+const colorList = [
+  "rgb(197,217,254)",
+  "white",
+]
 
 export default function WorkScheduleScreen({ navigation }) {
 
@@ -42,13 +48,19 @@ export default function WorkScheduleScreen({ navigation }) {
     React.useCallback(() => {
       loadScheduleData()
     }, [])
-);
+  );
 
   const loadScheduleData = async () => {
     const response = await getWorkSchedule()
     if (response?.status === 200) {
       const newDate = new Date(time).toISOString()
-      setDateList(response?.data)
+      setDateList(
+        response?.data?.sort((a, b) => new Date(a.date) - new Date(b.date))?.map((item, index) => {
+          return {
+            ...item, index: index
+          }
+        })
+      )
       setDateSelected(newDate)
     } else {
       console.log("loadScheduleData fail ", response?.response?.data);
@@ -70,18 +82,24 @@ export default function WorkScheduleScreen({ navigation }) {
     return currentDate
   }
 
-  const formatDataAgenda = () => {
-    const formattedAgendaData = {};
+  const formatDataAgenda = (scheduleData, currentDate) => {
+    const { startDate, endDate } = getStartDateEndDate(currentDate);
+    const allDates = generateDateRange(startDate, endDate);
+    const formattedData = {};
 
-    dateList.forEach(item => {
-      const agendaDate = item.date.split("T")[0];
-      if (!formattedAgendaData[agendaDate]) {
-        formattedAgendaData[agendaDate] = [];
-      }
-      formattedAgendaData[agendaDate].push(item);
+    allDates.forEach(date => {
+      formattedData[date] = [];
     });
-    return formattedAgendaData
-  }
+
+    scheduleData.forEach(item => {
+      const dateKey = format(parseISO(item.date), 'yyyy-MM-dd');
+      if (!formattedData[dateKey]) {
+        formattedData[dateKey] = [];
+      }
+      formattedData[dateKey].push(item);
+    });
+    return formattedData;
+  };
 
   function formatScheduleDate(inputDate) {
     const daysOfWeek = ['Chủ nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7'];
@@ -116,6 +134,26 @@ export default function WorkScheduleScreen({ navigation }) {
     );
   };
 
+  const generateDateRange = (startDate, endDate) => {
+    return eachDayOfInterval({
+      start: parseISO(startDate),
+      end: parseISO(endDate),
+    }).map(date => format(date, 'yyyy-MM-dd'));
+  };
+
+  const getStartDateEndDate = (providedDate) => {
+    const providedDateTime = new Date(providedDate);
+    const startDate = new Date(providedDateTime);
+    startDate.setDate(startDate.getDate() - 15);
+    const endDate = new Date(providedDateTime);
+    endDate.setDate(endDate.getDate() + 15);
+    const formattedStartDate = startDate.toISOString().split('T')[0];
+    const formattedEndDate = endDate.toISOString().split('T')[0];
+
+    return { startDate: formattedStartDate, endDate: formattedEndDate };
+  };
+
+
   const optionList = [
     {
       label: "Điểm danh",
@@ -133,7 +171,7 @@ export default function WorkScheduleScreen({ navigation }) {
 
   return (
     <>
-      <Header navigation={navigation} title={"Lich Làm Việc"} goback={() => navigation.navigate("Root")} hiddenBackButton={true}/>
+      <Header navigation={navigation} title={"Lich Làm Việc"} goback={() => navigation.navigate("Root")} hiddenBackButton={true} />
       <View showsVerticalScrollIndicator={false} style={styles.container}>
         <View style={styles.titleView}>
           <Text style={styles.title}>Lịch học:</Text>
@@ -159,15 +197,25 @@ export default function WorkScheduleScreen({ navigation }) {
                 }}
                 selected={dateSelected}
                 items={
-                  formatDataAgenda()
+                  formatDataAgenda(dateList, time)
                 }
                 renderItem={(item) => (
-                  <TouchableOpacity style={styles.item} onPress={() => { setDateSelected(item?.date); setCalendarType("day"); handleClassNavigate(item) }}>
+                  <TouchableOpacity style={{
+                    ...styles.item,
+                    backgroundColor: colorList[item?.index % colorList?.length]
+                  }} onPress={() => { setDateSelected(item?.date); setCalendarType("day"); handleClassNavigate(item) }}>
                     <Text style={{ ...styles.boldText }}>{shortedTime(item?.slot?.startTime)} - {shortedTime(item?.slot?.endTime)}</Text>
                     <Text style={{ ...styles.boldText }}>{item?.className} - <Text style={{ textTransform: "capitalize" }}> {item?.method} </Text> {renderAttendanceStatus(item?.attendanceStatus)} </Text>
                     <Text style={{ ...styles.itemText }}>Phòng {item?.room?.name ? item.room.name : 'N/A'} - Lầu {item?.room?.floor ? item.room.floor : 'N/A'}</Text>
                   </TouchableOpacity>
                 )}
+                renderEmptyDate={() => {
+                  return (
+                    <View style={{ justifyContent: "center", alignItems: "center" }}>
+                      <View style={{ borderWidth: 0.3, width: "90%", marginTop: "20%" }} />
+                    </View>
+                  );
+                }}
               />
               {/* <View style={styles.noteView}>
                 <View style={{ ...styles.noteHaft, backgroundColor: "#F6F2E5" }}>

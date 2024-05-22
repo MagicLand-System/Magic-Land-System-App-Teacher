@@ -5,11 +5,14 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../../store/selector';
 
+import { NotificateContext } from '../../../context/NotificateContext';
+
 import SearchBar from '../../../components/SearchBar';
 import ClassCartCard from '../../../components/ClassCartCard';
 import NofiticationCard from '../../../components/NofiticationCard';
 import { getAllAttendanceClass } from '../../../api/teacher';
 import { TimeContext } from '../../../context/TimeContext';
+import { getNotificateLength } from '../../../util/util';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -30,6 +33,7 @@ const noficationListDefault = [
 export default function HomeScreen({ navigation }) {
 
   const { time } = useContext(TimeContext)
+  const { notificate } = useContext(NotificateContext)
   const [currentTime, setCurrentTime] = useState(new Date(time));
   const [searchValue, setSearchValue] = useState("")
   const [classList, setClassList] = useState([])
@@ -89,8 +93,14 @@ export default function HomeScreen({ navigation }) {
             </View>
             <View style={styles.headerInforRight}>
               <View style={styles.flexBetweenColumn}>
-                <TouchableOpacity style={styles.iconNavigate}>
+                <TouchableOpacity style={styles.iconNavigate} onPress={() => navigation.push("NofiticationScreen")}>
                   <Icon name={"bell"} color={"#ffffff"} size={28} />
+                  {
+                    getNotificateLength(notificate) > 0 &&
+                    <View style={styles.nofiticationRedDot}>
+                      {/* <Text></Text> */}
+                    </View>
+                  }
                 </TouchableOpacity>
               </View>
             </View>
@@ -181,6 +191,16 @@ const styles = StyleSheet.create({
   },
   iconNavigate: {
     marginHorizontal: 10
+  },
+  nofiticationRedDot: {
+    position: "absolute",
+    width: 10,
+    height: 10,
+    backgroundColor: "red",
+    borderRadius: 50,
+    zIndex: 10,
+    right: "2%",
+    top: "5%"
   },
   titleView: {
     flexDirection: "row",
