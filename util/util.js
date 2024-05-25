@@ -97,10 +97,9 @@ export function compareDates(dateString1, dateString2) {
 export function obfuscateEmail(email) {
     // Split the email into username and domain
     const [username, domain] = email.split('@');
-
     // Obfuscate the username
     const obfuscatedUsername = username.length > 2
-        ? username[0] + username[1] + username[2] + '*'.repeat(username.length - 5) + username.slice(-3)
+        ? username[0] + username[1]  + '*'.repeat(username.length - 3) + username.slice(-1)
         : username + '*';
 
     // Return the obfuscated email

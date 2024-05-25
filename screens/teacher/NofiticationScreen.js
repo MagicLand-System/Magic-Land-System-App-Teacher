@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Dimensions, Image, ImageBackground } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Dimensions, Image, ImageBackground, RefreshControl } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -15,10 +15,11 @@ export default function NofiticationScreen({ route, navigation }) {
 
     const { notificate, updateNotificate, reloadNotificate } = useContext(NotificateContext)
     const [nofiticationList, setNofiticationList] = useState([])
+    const [refreshing, setRefreshing] = useState(false);
     const showToast = CustomToast();
 
     useEffect(() => {
-        setNofiticationList(notificate?.reverse())
+        setNofiticationList(notificate)
     }, [notificate])
 
     const handleOnPress = async (item) => {
@@ -54,17 +55,32 @@ export default function NofiticationScreen({ route, navigation }) {
         }
     }
 
+    const onRefresh = async () => {
+        setRefreshing(true)
+        await reloadNotificate()
+        setRefreshing(false)
+    };
+
     return (
         <>
             <Header navigation={navigation} goback={navigation.pop} title={"Thông báo"} />
-            <ScrollView showsVerticalScrollIndicator={false} style={styles.nofiticationList}>
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                style={styles.nofiticationList}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
                 <View style={styles.allReadView}>
                     <TouchableOpacity style={styles.allReadButton} onPress={handleSetAllRead}>
                         <Icon name={"text-box-check-outline"} color={"#241468"} size={28} />
                     </TouchableOpacity>
                 </View>
                 {
-                    nofiticationList?.map((item, key) => {
+                    nofiticationList?.reverse()?.map((item, key) => {
                         return (
                             <TouchableOpacity
                                 style={{ ...styles.nofiticationTab, backgroundColor: !item?.isRead ? "white" : "#EBEBEB" }}
