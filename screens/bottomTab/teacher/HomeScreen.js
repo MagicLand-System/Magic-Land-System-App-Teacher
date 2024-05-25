@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions, RefreshControl } from 'react-native'
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -39,8 +39,8 @@ export default function HomeScreen({ navigation }) {
   const [classList, setClassList] = useState([])
   const [noficationList, setNoficationList] = useState(noficationListDefault)
   const [filterVisible, setFilterVisible] = useState(false)
-  const [filterValue, setFilterValue] = useState({ type: undefined })
   const user = useSelector(userSelector);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     loadClassData()
@@ -82,9 +82,24 @@ export default function HomeScreen({ navigation }) {
     },
   ]
 
+  const onRefresh = async () => {
+    setRefreshing(true)
+    await loadClassData()
+    setRefreshing(false)
+  };
+
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      >
         <View style={styles.header}>
           <View style={{ ...styles.flexBetweenColumn, paddingHorizontal: 20 }}>
             <View style={styles.headerInforLeft}>
@@ -118,7 +133,7 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.title}>Lớp học tiếp theo:</Text>
           </View>
         }
-        <ScrollView style={styles.classList}>
+        <ScrollView style={styles.classList} nestedScrollEnabled={true}>
           {
             classList.map((item, key) => (
               <ClassCartCard
@@ -137,7 +152,7 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.titleView}>
           <Text style={styles.title}>Thông báo:</Text>
         </View>
-        <ScrollView style={styles.noficationList}>
+        <ScrollView style={styles.noficationList} nestedScrollEnabled={true}>
           {
             noficationList.map((item, key) => (
               <NofiticationCard notificationDetail={item} onClick={hanldeViewWorkSchedule} key={key} />

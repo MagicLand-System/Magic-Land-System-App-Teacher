@@ -3,7 +3,6 @@ import React from 'react'
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import { constants } from '../../constants/constants';
-import defaultAvt from "../../assets/header/defaultAvt.png"
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -15,10 +14,10 @@ export default function FavoriteHeader({ goback, navigation, background, title, 
             <TouchableOpacity
                 style={styles.backButton}
                 onPress={() => {
-                    goback ? goback() : navigation?.pop();
+                    goback ? goback() : navigation.pop();
                 }}
             >
-                <Icon name={"close"} color={"white"} size={28} />
+                <Icon name={"arrow-back-ios"} color={"white"} size={28} />
             </TouchableOpacity>
             <Text style={styles.headerTitle}>
                 {title}
@@ -60,6 +59,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         left: 0,
+        bottom: 0
     },
     chooseButton: {
         position: "absolute",
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         right: 10,
+        bottom: 10,
         backgroundColor: "#FFFFFF"
     },
     chooseText: {
