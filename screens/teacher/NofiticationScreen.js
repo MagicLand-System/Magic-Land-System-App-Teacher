@@ -7,6 +7,8 @@ import { readNotification } from '../../api/notification';
 import { formatDate } from '../../util/util';
 import { NotificateContext } from '../../context/NotificateContext';
 import CustomToast from "../../components/CustomToast";
+import { NotificationType } from '../../constants/notification';
+import { getClassByClassId } from "../../api/class"
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -37,6 +39,7 @@ export default function NofiticationScreen({ route, navigation }) {
         } else {
             console.log(response?.response?.data);
         }
+        await handleNotificateAction(item)
     }
 
     const handleSetAllRead = async () => {
@@ -53,6 +56,29 @@ export default function NofiticationScreen({ route, navigation }) {
                 console.log(response?.response?.data);
             }
         }
+    }
+
+    const handleNotificateAction = async (notificate) => {
+        let response
+        switch (notificate?.type) {
+            case NotificationType?.REMIND_ATTENDANCE?.type:
+                response = await getClassByClassId(JSON.parse(notificate?.actionData)?.ClassId)
+                if (response?.status === 200) {
+                    const classDetail = response?.data
+                    navigation.push("AttendanceScreen", { classDetail: classDetail, date: JSON.parse(notificate?.actionData)?.Date, slot: JSON.parse(notificate?.actionData)?.NoSlot })
+                }
+                break
+            case NotificationType?.REMIND_EVALUATE?.type:
+                response = await getClassByClassId(JSON.parse(notificate?.actionData)?.ClassId)
+                if (response?.status === 200) {
+                    const classDetail = response?.data
+                    navigation.push("RateStudentScreen", { classDetail: classDetail, date: JSON.parse(notificate?.actionData)?.Date, noSession: JSON.parse(notificate?.actionData)?.NoSlot })
+                }
+                break
+            default:
+                break;
+        }
+
     }
 
     const onRefresh = async () => {

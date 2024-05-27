@@ -12,7 +12,7 @@ export const getAllNotification = async () => {
 
 export const readNotification = async (id) => {
     let path = ``
-    id.map((item) => {
+    id?.map((item) => {
         path += `ids=${item}&&`
     })
     try {

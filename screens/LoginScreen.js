@@ -14,7 +14,6 @@ import { Baloo2_700Bold } from '@expo-google-fonts/baloo-2';
 import { useDispatch } from "react-redux";
 import { fetchUser } from "../store/features/authSlice";
 import LoadingModal from "../components/LoadingModal";
-import { fetchStudentList } from '../store/features/studentSlice';
 import PhoneInput from "react-native-phone-number-input";
 
 const WIDTH = Dimensions.get('window').width;
@@ -68,7 +67,7 @@ export default function LoginScreen() {
 
           const data = await authUser({ phone: phoneNumber })
           const accessToken = data.accessToken;
-          await AsyncStorage.setItem('accessToken', accessToken).then(dispatch(fetchUser())).then(dispatch(fetchStudentList()))
+          await AsyncStorage.setItem('accessToken', accessToken).then(dispatch(fetchUser()))
         }
       }
     } catch (error) {

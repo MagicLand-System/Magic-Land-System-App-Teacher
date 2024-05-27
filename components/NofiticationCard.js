@@ -1,6 +1,7 @@
 import { View, Text, Image, TextInput, TouchableOpacity, Dimensions, ScrollView, StyleSheet } from 'react-native'
 import React, { useState, useEffect, useContext } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { formatDate, formatTime } from '../util/util';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -8,17 +9,17 @@ const HEIGHT = Dimensions.get('window').height;
 export default function NofiticationCard({ notificationDetail, onClick }) {
 
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={() => onClick(notificationDetail)}>
             <View style={styles.flexColumnBetween}>
                 <Text style={{ ...styles.boldText, fontSize: 16 }}>{notificationDetail?.title}</Text>
-                <Text style={{ opacity: 0.6 }}>{notificationDetail?.time}</Text>
+                <Text style={{ opacity: 0.6 }}>{formatTime(notificationDetail?.createdAt)} - {formatDate(notificationDetail?.createdAt)}</Text>
             </View>
             <View style={styles.flexColumnBetween}>
                 <View style={{ width: WIDTH * 0.04, justifyContent: "center", alignItems: "center" }}>
                     <Icon name={"circle"} color={"#000000"} size={10} />
                 </View>
                 <Text style={{ width: WIDTH * 0.8 }}>
-                    {notificationDetail?.message}
+                    {notificationDetail?.body}
                 </Text>
             </View>
 
