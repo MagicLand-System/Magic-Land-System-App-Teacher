@@ -13,6 +13,7 @@ import NofiticationCard from '../../../components/NofiticationCard';
 import { getAllAttendanceClass } from '../../../api/teacher';
 import { TimeContext } from '../../../context/TimeContext';
 import { getNotificateLength } from '../../../util/util';
+import { readNotification } from '../../../api/notification';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -33,7 +34,7 @@ const noficationListDefault = [
 export default function HomeScreen({ navigation }) {
 
   const { time } = useContext(TimeContext)
-  const { notificate } = useContext(NotificateContext)
+  const { notificate, reloadNotificate } = useContext(NotificateContext)
   const [currentTime, setCurrentTime] = useState(new Date(time));
   const [searchValue, setSearchValue] = useState("")
   const [classList, setClassList] = useState([])
@@ -44,6 +45,7 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     loadClassData()
+    reloadNotificate()
   }, [])
 
   useEffect(() => {
@@ -63,7 +65,13 @@ export default function HomeScreen({ navigation }) {
     setSearchValue(value)
   }
 
-  const hanldeViewWorkSchedule = (item) => {
+  const hanldeViewWorkSchedule = async (item) => {
+    const response = await readNotification([item?.notificationId])
+    if (response?.status === 200) {
+      await readNotification()
+    } else {
+      console.log(response?.response?.data);
+    }
     // navigation.push("ClassOptionScreen", { classId: item?.classId, date: time, slot: item?.slotOrder, noSession: item?.noSession })
   }
 
@@ -154,7 +162,7 @@ export default function HomeScreen({ navigation }) {
         </View>
         <ScrollView style={styles.noficationList} nestedScrollEnabled={true}>
           {
-            noficationList.map((item, key) => (
+            notificate?.slice(0, 2)?.map((item, key) => (
               <NofiticationCard notificationDetail={item} onClick={hanldeViewWorkSchedule} key={key} />
             ))
           }
