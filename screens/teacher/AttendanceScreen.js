@@ -30,9 +30,7 @@ export default function AttendanceScreen({ route, navigation }) {
 
     const loadStudentData = async () => {
         const response = await getAttendanceListByDate(classDetail.classId, date)
-        console.log(classDetail.classId, date);
         if (response?.status === 200) {
-            console.log(response.data.attendanceInformation);
             // const data = response?.data?.map((item) => {
             //     return {
             //         ...item,
@@ -137,7 +135,23 @@ export default function AttendanceScreen({ route, navigation }) {
                                             key={index}>
                                             <View style={styles.columnNumber}>
                                                 <Text style={{ ...styles.boldText, marginHorizontal: 5, marginRight: 2 }}>{index + 1}</Text>
-                                                <Icon name={"account-circle"} color={"#908484"} size={WIDTH * 0.13} />
+                                                {
+                                                    item?.avatarImage && item?.avatarImage !== "url" ?
+                                                        <View style={styles.studentAvata}>
+                                                            <Image
+                                                                source={{ uri: item?.avatarImage }}
+                                                                resizeMode="contain"
+                                                                style={{
+                                                                    width: WIDTH * 0.15,
+                                                                    height: WIDTH * 0.15,
+                                                                    borderRadius: 50,
+                                                                }}
+                                                            />
+                                                        </View>
+                                                        :
+                                                        <Icon name={"account-circle"} color={"#908484"} size={WIDTH * 0.13} />
+                                                }
+
                                             </View>
                                             <Text style={styles.columnName}>{item?.studentName}</Text>
                                             <View style={styles.columnStatus}>
@@ -220,6 +234,12 @@ const styles = StyleSheet.create({
         width: "25%",
         paddingLeft: 10,
         alignItems: "center",
+    },
+    studentAvata: {
+        width: "100%",
+        height: "100%",
+        borderRadius: 50,
+        overflow: "hidden"
     },
     columnName: {
         width: "30%",

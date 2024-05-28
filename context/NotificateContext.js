@@ -9,7 +9,7 @@ export const NotificateContext = createContext();
 // Create the UserProvider component
 export const NotificatePovider = ({ children }) => {
     const user = useSelector(userSelector);
-    const [notificate, setNotificate] = useState(new Date);
+    const [notificate, setNotificate] = useState([]);
 
     useEffect(() => {
         reloadNotificate()

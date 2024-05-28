@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions, RefreshControl } from 'react-native'
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -23,6 +23,7 @@ export default function TeacherCourseSyllabus({ route, navigation }) {
     const [quizList, setQuizList] = useState([])
     const [loading, setLoading] = useState(true)
     const [tabType, setTabType] = useState("syllabus")
+    const [refreshing, setRefreshing] = useState(false);
     let count = 0
 
     useEffect(() => {
@@ -69,6 +70,12 @@ export default function TeacherCourseSyllabus({ route, navigation }) {
         // navigation.push("RateStudentScreen", { classDetail: courseItem, date: item?.date, slot: item?.slotOrder })
     }
 
+    const onRefresh = async () => {
+        setRefreshing(true)
+        await loadCourseSyllabus()
+        setRefreshing(false)
+    };
+
     return (
         <>
             <Header navigation={navigation} goback={navigation.pop} title={courseItem?.className} />
@@ -90,7 +97,15 @@ export default function TeacherCourseSyllabus({ route, navigation }) {
                 loading ?
                     <SpinnerLoading />
                     :
-                    <ScrollView style={styles.container}>
+                    <ScrollView style={styles.container}
+                        showsVerticalScrollIndicator={false}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={refreshing}
+                                onRefresh={onRefresh}
+                            />
+                        }
+                    >
                         {
                             !loading &&
                             <>

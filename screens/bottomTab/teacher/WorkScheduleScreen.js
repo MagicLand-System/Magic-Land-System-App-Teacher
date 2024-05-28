@@ -61,7 +61,7 @@ export default function WorkScheduleScreen({ navigation }) {
           }
         })
       )
-      setDateSelected(newDate)
+      // setDateSelected(newDate)
     } else {
       console.log("loadScheduleData fail ", response?.response?.data);
     }
