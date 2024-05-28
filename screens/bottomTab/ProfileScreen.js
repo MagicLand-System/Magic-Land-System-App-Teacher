@@ -70,7 +70,7 @@ export default function ProfileScreen({ navigation }) {
       onClick: handleLogout,
     },
   ]
-
+  console.log(user?.role);
   return (
     <>
       <Header navigation={navigation} title={"Tài khoản"} goback={navigation.goBack} hiddenBackButton={true} />
@@ -81,7 +81,7 @@ export default function ProfileScreen({ navigation }) {
               <View style={{ ...styles.flexColumnBetween, marginBottom: 10 }}>
                 <Text style={styles.userName}>
                   {
-                    user?.role?.name?.name === "LECTURER" ?
+                    user?.role?.name === "LECTURER" ?
                       "GV: "
                       :
                       "PH: "
