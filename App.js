@@ -6,8 +6,10 @@ import StackNavigator from './navigation/StackNavigator';
 import { ToastProvider } from 'react-native-toast-notifications'
 import { TimePovider } from './context/TimeContext';
 import { NotificatePovider } from './context/NotificateContext';
+import { LogBox } from 'react-native';
 
 export default function App() {
+  LogBox.ignoreAllLogs();
   return (
     <Provider store={store}>
       <ToastProvider>
