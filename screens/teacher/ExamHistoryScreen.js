@@ -184,6 +184,7 @@ export default function ExamHistoryScreen({ route }) {
                                                     </View>
                                                     <View style={[styles.contentTable, styles.flexColumnBetween]}>
                                                         <View width style={{ width: "80%" }}>
+
                                                             {
                                                                 element?.studentFirstCardAnswerImage ?
                                                                     <>
@@ -249,9 +250,8 @@ export default function ExamHistoryScreen({ route }) {
                 </View>
                 <View style={{ ...styles.flexColumnBetween, width: WIDTH * 0.8, marginHorizontal: WIDTH * 0.1, marginVertical: 10 }}>
                     <Text style={styles.boldText}>Số lần làm:</Text>
-                    <Text style={styles.boldText}>{quizData?.noAttemp} lần</Text>
+                    <Text style={styles.boldText}>{quizData?.noAttempt} lần</Text>
                 </View>
-
 
             </ScrollView >
             <ChooseRateModal

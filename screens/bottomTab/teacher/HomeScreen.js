@@ -162,7 +162,7 @@ export default function HomeScreen({ navigation }) {
         </View>
         <ScrollView style={styles.noficationList} nestedScrollEnabled={true}>
           {
-            notificate?.slice(0, 2)?.map((item, key) => (
+            notificate?.slice(0, 2) && notificate?.slice(0, 2)?.map((item, key) => (
               <NofiticationCard notificationDetail={item} onClick={hanldeViewWorkSchedule} key={key} />
             ))
           }
