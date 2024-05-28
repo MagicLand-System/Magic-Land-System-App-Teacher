@@ -93,7 +93,6 @@ export default function LoginScreen() {
         .then(dispatch(fetchUser()))
         .then(dispatch(fetchStudentList()))
         .then(setLoading(false))
-        .then(Alert.alert('Đăng nhập thành công'))
     } catch (error) {
       console.log(error)
       setErrorMessage("Xác thực OTP không thành công")

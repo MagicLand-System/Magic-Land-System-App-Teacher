@@ -19,7 +19,6 @@ instance.interceptors.response.use(
   async (err) => {
     if (err.response) {
       if (err.response.status === 401 || err.response.status === 500) {
-        alert('Hãy đăng nhập để tiếp tục!')
         await signOut(auth)
         await AsyncStorage.removeItem("accessToken");
       }
