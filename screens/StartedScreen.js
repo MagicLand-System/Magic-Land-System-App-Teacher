@@ -54,7 +54,7 @@ export default function StartedScreen() {
                 ))}
             </Swiper>
             <View style={styles.buttonView}>
-                <MainButton onPress={() => navigation.navigate('Login')} title="Đăng kí / Đăng nhập" />
+                <MainButton onPress={() => navigation.navigate('Login')} title="Đăng nhập" />
             </View>
         </View>
     )
