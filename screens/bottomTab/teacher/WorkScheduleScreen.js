@@ -40,9 +40,10 @@ export default function WorkScheduleScreen({ navigation }) {
   };
   LocaleConfig.defaultLocale = 'fr';
 
-  // useEffect(() => {
-  //   loadScheduleData()
-  // }, [])
+  useEffect(() => {
+    const newDate = new Date(time).toISOString()s
+    setDateSelected(newDate)
+  }, [time])
 
   useFocusEffect(
     React.useCallback(() => {
