@@ -56,8 +56,10 @@ export default function TeacherCourseSyllabus({ route, navigation }) {
     }
 
     const handleDoExam = (exam) => {
-        navigation.push("QuizDetailScreen", { quizData: exam, classInfor: courseItem })
-        // navigation.push("ExamResultScreen", { classDetail: exam, date: exam?.date, quizData: exam })
+        // console.log({ classDetail: exam, date: exam?.date, quizData: exam });
+        // navigation.push("QuizDetailScreen", { quizData: exam, classInfor: courseItem })
+        // navigation.push("ExamResultScreen", { classDetail: classInfor, date: classInfor?.date, quizData: quizData })
+        navigation.push("ExamResultScreen", { classDetail: courseItem, date: exam?.date, quizData: exam })
     }
 
     const handleAttendance = (item) => {
