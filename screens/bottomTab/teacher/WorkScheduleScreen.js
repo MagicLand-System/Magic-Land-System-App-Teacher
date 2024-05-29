@@ -41,7 +41,7 @@ export default function WorkScheduleScreen({ navigation }) {
   LocaleConfig.defaultLocale = 'fr';
 
   useEffect(() => {
-    const newDate = new Date(time).toISOString()s
+    const newDate = new Date(time).toISOString()
     setDateSelected(newDate)
   }, [time])
 
