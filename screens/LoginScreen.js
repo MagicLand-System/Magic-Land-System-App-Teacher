@@ -55,19 +55,19 @@ export default function LoginScreen() {
           setErrorMessage('Tài khoản của bạn không được hỗ trợ trên nền tảng này')
           setLoading(false)
         } else {
-          const phoneProvider = new PhoneAuthProvider(auth);
-          const verificationId = await phoneProvider.verifyPhoneNumber(
-            phoneNumber.split('_')[0],
-            recaptchaVerifier.current
-          );
-          setVerificationId(verificationId)
-          setLoading(false)
-          setErrorMessage('')
-          setShowOtp(true)
+          // const phoneProvider = new PhoneAuthProvider(auth);
+          // const verificationId = await phoneProvider.verifyPhoneNumber(
+          //   phoneNumber.split('_')[0],
+          //   recaptchaVerifier.current
+          // );
+          // setVerificationId(verificationId)
+          // setLoading(false)
+          // setErrorMessage('')
+          // setShowOtp(true)
 
-          // const data = await authUser({ phone: phoneNumber })
-          // const accessToken = data.accessToken;
-          // await AsyncStorage.setItem('accessToken', accessToken).then(dispatch(fetchUser()))
+          const data = await authUser({ phone: phoneNumber })
+          const accessToken = data.accessToken;
+          await AsyncStorage.setItem('accessToken', accessToken).then(dispatch(fetchUser()))
         }
       }
     } catch (error) {
