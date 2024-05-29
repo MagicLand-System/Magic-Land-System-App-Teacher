@@ -76,9 +76,6 @@ export default function ExamHistoryScreen({ route }) {
         <>
             <Header navigation={navigation} goback={goback} title={quizData?.quizName} />
             <ScrollView style={styles.container}>
-                <View style={styles.titleView}>
-                    <Text style={styles.title}>{quizData?.quizName}</Text>
-                </View>
                 <TouchableOpacity style={styles.titleView} onPress={() => setModalVisible({ ...modalVisible, chooseRate: true })}>
                     <Text style={styles.title}>Đánh giá của giáo viên: </Text>
                     {
@@ -91,6 +88,9 @@ export default function ExamHistoryScreen({ route }) {
                     }
                     {/* <Text> {rateList.find(obj => obj.eng.toLowerCase() === (quizData?.examStatus ? quizData?.examStatus : studentDetail?.note)?.toLowerCase())?.vn}</Text> */}
                 </TouchableOpacity>
+                <View style={styles.titleView}>
+                    <Text style={styles.title}>{quizData?.quizName}</Text>
+                </View>
                 {
                     quizType === "multiple-choice" &&
                     <View style={styles.questionTable}>

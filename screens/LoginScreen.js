@@ -155,6 +155,16 @@ export default function LoginScreen() {
       ) : (
         <>
           <Text style={styles.title}>Xác thực OTP</Text>
+          <View style={styles.backView}>
+            <TouchableOpacity
+              onPress={() => {
+                setShowOtp(false);
+                setOtp('')
+              }}
+            >
+              <Text style={styles.backButtonText}>Quay lại</Text>
+            </TouchableOpacity>
+          </View>
           <Text style={{ fontFamily: 'Inter_400Regular', fontSize: 16, margin: 20, marginBottom: 40 }}>Chúng tôi đã gửi một mã xác thực đến số điện thoại {phoneNumber.substring(0, 6)}*****:</Text>
           <OTPTextInput
             handleTextChange={setOtp}
@@ -269,5 +279,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#f2c955',
     textDecorationLine: 'underline',
+  },
+  backView: {
+    position: 'absolute',
+    top: 30,
+    left: 0,
+  },
+  backButtonText: {
+    paddingLeft: 20,
+    fontFamily: 'Inter_400Regular',
+    fontSize: 18,
   }
 })
