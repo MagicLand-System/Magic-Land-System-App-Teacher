@@ -65,9 +65,9 @@ export default function LoginScreen() {
           // setErrorMessage('')
           // setShowOtp(true)
 
-          // const data = await authUser({ phone: phoneNumber })
-          // const accessToken = data.accessToken;
-          // await AsyncStorage.setItem('accessToken', accessToken).then(dispatch(fetchUser()))
+          const data = await authUser({ phone: phoneNumber })
+          const accessToken = data.accessToken;
+          await AsyncStorage.setItem('accessToken', accessToken).then(dispatch(fetchUser()))
         }
       }
     } catch (error) {
