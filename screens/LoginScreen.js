@@ -51,23 +51,23 @@ export default function LoginScreen() {
       setLoading(true)
       const data = await checkExist({ phone: phoneNumber })
       if (data) {
-        if (data.role === "STAFF" || data.role === "ADMIN") {
+        if (data.role !== 'LECTURER') {
           setErrorMessage('Tài khoản của bạn không được hỗ trợ trên nền tảng này')
           setLoading(false)
         } else {
-          // const phoneProvider = new PhoneAuthProvider(auth);
-          // const verificationId = await phoneProvider.verifyPhoneNumber(
-          //   phoneNumber.split('_')[0],
-          //   recaptchaVerifier.current
-          // );
-          // setVerificationId(verificationId)
+          const phoneProvider = new PhoneAuthProvider(auth);
+          const verificationId = await phoneProvider.verifyPhoneNumber(
+            phoneNumber.split('_')[0],
+            recaptchaVerifier.current
+          );
+          setVerificationId(verificationId)
           setLoading(false)
           setErrorMessage('')
-          // setShowOtp(true)
+          setShowOtp(true)
 
-          const data = await authUser({ phone: phoneNumber })
-          const accessToken = data.accessToken;
-          await AsyncStorage.setItem('accessToken', accessToken).then(dispatch(fetchUser()))
+          // const data = await authUser({ phone: phoneNumber })
+          // const accessToken = data.accessToken;
+          // await AsyncStorage.setItem('accessToken', accessToken).then(dispatch(fetchUser()))
         }
       }
     } catch (error) {
@@ -145,14 +145,6 @@ export default function LoginScreen() {
             ) : (
               <MainButton onPress={login} title="Gửi OTP" />
             )}
-            {/* <View style={styles.navigationView}>
-              <Text style={styles.navigationText}>Chưa có tài khoản</Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Register')}
-              >
-                <Text style={styles.navigationButtonText}>Đăng kí ngay</Text>
-              </TouchableOpacity>
-            </View> */}
             {errorMessage !== '' && (
               <View style={styles.errorMessage}>
                 <Text style={styles.errorText}>{errorMessage}</Text>
