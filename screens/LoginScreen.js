@@ -51,23 +51,23 @@ export default function LoginScreen() {
       setLoading(true)
       const data = await checkExist({ phone: phoneNumber })
       if (data) {
-        if (data.role === "STAFF" || data.role === "ADMIN") {
+        if (data.role !== 'LECTURER') {
           setErrorMessage('Tài khoản của bạn không được hỗ trợ trên nền tảng này')
           setLoading(false)
         } else {
-          // const phoneProvider = new PhoneAuthProvider(auth);
-          // const verificationId = await phoneProvider.verifyPhoneNumber(
-          //   phoneNumber.split('_')[0],
-          //   recaptchaVerifier.current
-          // );
-          // setVerificationId(verificationId)
+          const phoneProvider = new PhoneAuthProvider(auth);
+          const verificationId = await phoneProvider.verifyPhoneNumber(
+            phoneNumber.split('_')[0],
+            recaptchaVerifier.current
+          );
+          setVerificationId(verificationId)
           setLoading(false)
           setErrorMessage('')
-          // setShowOtp(true)
+          setShowOtp(true)
 
-          const data = await authUser({ phone: phoneNumber })
-          const accessToken = data.accessToken;
-          await AsyncStorage.setItem('accessToken', accessToken).then(dispatch(fetchUser()))
+          // const data = await authUser({ phone: phoneNumber })
+          // const accessToken = data.accessToken;
+          // await AsyncStorage.setItem('accessToken', accessToken).then(dispatch(fetchUser()))
         }
       }
     } catch (error) {
@@ -93,7 +93,6 @@ export default function LoginScreen() {
         .then(dispatch(fetchUser()))
         .then(dispatch(fetchStudentList()))
         .then(setLoading(false))
-        .then(Alert.alert('Đăng nhập thành công'))
     } catch (error) {
       console.log(error)
       setErrorMessage("Xác thực OTP không thành công")
@@ -146,14 +145,6 @@ export default function LoginScreen() {
             ) : (
               <MainButton onPress={login} title="Gửi OTP" />
             )}
-            <View style={styles.navigationView}>
-              <Text style={styles.navigationText}>Chưa có tài khoản</Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Register')}
-              >
-                <Text style={styles.navigationButtonText}>Đăng kí ngay</Text>
-              </TouchableOpacity>
-            </View>
             {errorMessage !== '' && (
               <View style={styles.errorMessage}>
                 <Text style={styles.errorText}>{errorMessage}</Text>
@@ -164,6 +155,16 @@ export default function LoginScreen() {
       ) : (
         <>
           <Text style={styles.title}>Xác thực OTP</Text>
+          <View style={styles.backView}>
+            <TouchableOpacity
+              onPress={() => {
+                setShowOtp(false);
+                setOtp('')
+              }}
+            >
+              <Text style={styles.backButtonText}>Quay lại</Text>
+            </TouchableOpacity>
+          </View>
           <Text style={{ fontFamily: 'Inter_400Regular', fontSize: 16, margin: 20, marginBottom: 40 }}>Chúng tôi đã gửi một mã xác thực đến số điện thoại {phoneNumber.substring(0, 6)}*****:</Text>
           <OTPTextInput
             handleTextChange={setOtp}
@@ -278,5 +279,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#f2c955',
     textDecorationLine: 'underline',
+  },
+  backView: {
+    position: 'absolute',
+    top: 30,
+    left: 0,
+  },
+  backButtonText: {
+    paddingLeft: 20,
+    fontFamily: 'Inter_400Regular',
+    fontSize: 18,
   }
 })
