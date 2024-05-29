@@ -104,7 +104,6 @@ export default function AttendanceScreen({ route, navigation }) {
             return studentList.filter(student => student.studentName.toLowerCase().includes(search.toLowerCase()));
         }
     }
-
     return (
         <>
             <Header navigation={navigation} title={"Lớp " + classDetail?.classCode + " - Điểm danh"} goback={navigation.pop} />
@@ -142,9 +141,10 @@ export default function AttendanceScreen({ route, navigation }) {
                                                                 source={{ uri: item?.avatarImage }}
                                                                 resizeMode="contain"
                                                                 style={{
-                                                                    width: WIDTH * 0.15,
-                                                                    height: WIDTH * 0.15,
+                                                                    width: WIDTH * 0.13,
+                                                                    height: WIDTH * 0.13,
                                                                     borderRadius: 50,
+
                                                                 }}
                                                             />
                                                         </View>

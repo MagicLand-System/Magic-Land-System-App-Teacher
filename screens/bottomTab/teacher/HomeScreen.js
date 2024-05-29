@@ -14,6 +14,8 @@ import { getAllAttendanceClass } from '../../../api/teacher';
 import { TimeContext } from '../../../context/TimeContext';
 import { getNotificateLength } from '../../../util/util';
 import { readNotification } from '../../../api/notification';
+import { NotificationType } from '../../../constants/notification';
+import { getClassByClassId } from '../../../api/class';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -72,7 +74,30 @@ export default function HomeScreen({ navigation }) {
     } else {
       console.log(response?.response?.data);
     }
-    // navigation.push("ClassOptionScreen", { classId: item?.classId, date: time, slot: item?.slotOrder, noSession: item?.noSession })
+    await handleNotificateAction(item)
+  }
+
+  const handleNotificateAction = async (notificate) => {
+    let response
+    switch (notificate?.type) {
+      case NotificationType?.REMIND_ATTENDANCE?.type:
+        response = await getClassByClassId(JSON.parse(notificate?.actionData)?.ClassId)
+        if (response?.status === 200) {
+          const classDetail = response?.data
+          navigation.push("AttendanceScreen", { classDetail: classDetail, date: JSON.parse(notificate?.actionData)?.Date, slot: JSON.parse(notificate?.actionData)?.NoSlot })
+        }
+        break
+      case NotificationType?.REMIND_EVALUATE?.type:
+        response = await getClassByClassId(JSON.parse(notificate?.actionData)?.ClassId)
+        if (response?.status === 200) {
+          const classDetail = response?.data
+          navigation.push("RateStudentScreen", { classDetail: classDetail, date: JSON.parse(notificate?.actionData)?.Date, noSession: JSON.parse(notificate?.actionData)?.NoSlot })
+        }
+        break
+      default:
+        break;
+    }
+
   }
 
   const optionList = [
