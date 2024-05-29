@@ -65,7 +65,6 @@ export default function ExamResultScreen({ route, navigation }) {
 
     const loadStudentData = async () => {
         const response = await getExamResult({ classId: classDetail.classId, examIdList: [quizData?.examId] })
-        console.log(classDetail.classId, [quizData?.examId]);
         if (response?.status === 200) {
             const data = response?.data?.map((item) => {
                 return {
@@ -210,7 +209,7 @@ export default function ExamResultScreen({ route, navigation }) {
                                             key={index}>
                                             <View style={styles.columnNumber}>
                                                 <Text style={{ ...styles.boldText, marginHorizontal: 5, marginRight: 2 }}>{index + 1}</Text>
-                                                {console.log(item)}
+
                                                 {
                                                     item?.avatarImage && item?.avatarImage !== "url" ?
                                                         <View style={styles.studentAvata}>
