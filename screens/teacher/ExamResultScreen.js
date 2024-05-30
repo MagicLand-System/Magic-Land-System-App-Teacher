@@ -217,8 +217,8 @@ export default function ExamResultScreen({ route, navigation }) {
                                                                 source={{ uri: item?.avatarImage }}
                                                                 resizeMode="contain"
                                                                 style={{
-                                                                    width: WIDTH * 0.15,
-                                                                    height: WIDTH * 0.15,
+                                                                    width: WIDTH * 0.13,
+                                                                    height: WIDTH * 0.13,
                                                                     borderRadius: 50,
                                                                 }}
                                                             />
