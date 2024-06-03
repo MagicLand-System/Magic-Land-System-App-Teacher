@@ -10,12 +10,30 @@ const HEIGHT = Dimensions.get('window').height;
 
 export default function Header({ goback, navigation, background, title, hiddenBackButton }) {
 
-    const { time } = useContext(TimeContext)
-    const [currentTime, setCurrentTime] = useState(new Date(time));
+    const [currentTime, setCurrentTime] = useState(new Date());
 
     useEffect(() => {
-        setCurrentTime(new Date(time))
-    }, [time])
+        const loadTime = async () => {
+            try {
+                const response = await getRealTime();
+                const parsedTime = new Date(response);
+                const updatedTime = new Date(parsedTime.getTime() + 1000); // Adding one second
+                setCurrentTime(updatedTime);
+            } catch (error) {
+                console.error('Error fetching time:', error);
+            }
+        };
+
+        // Initial load
+        loadTime();
+
+        // Update time every second
+        const intervalId = setInterval(() => {
+            loadTime()
+        }, 60000);
+
+        return () => clearInterval(intervalId);
+    }, []);
 
     return (
         <View style={[styles.container, { backgroundColor: background ? background : constants.background }]}>
