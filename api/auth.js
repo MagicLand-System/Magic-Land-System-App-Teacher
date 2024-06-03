@@ -1,5 +1,5 @@
 import axios from "axios";
-const URL = process.env.EXPO_PUBLIC_API_LINK;
+const URL = "https://magiclandapiv2.somee.com";
 
 const instance = axios.create({
     baseURL: URL,

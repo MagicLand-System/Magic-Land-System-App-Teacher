@@ -2,7 +2,7 @@ import axios from "axios";
 import { refresh } from "./refresh";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const url = process.env.EXPO_PUBLIC_API_LINK;
+const url = "https://magiclandapiv2.somee.com";
 const instance = axios.create({
     baseURL: url,
     headers: {

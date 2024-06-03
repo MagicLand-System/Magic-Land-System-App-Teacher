@@ -8,6 +8,11 @@ import { TimePovider } from './context/TimeContext';
 import { NotificatePovider } from './context/NotificateContext';
 import { LogBox } from 'react-native';
 
+import 'react-native-gesture-handler';
+import 'react-native-svg';
+import 'react-native-safe-area-context';
+import 'react-native-screens';
+
 export default function App() {
   LogBox.ignoreAllLogs();
   return (
