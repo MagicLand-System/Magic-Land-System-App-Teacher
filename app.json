@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "MagicLand-System-App",
+    "name": "MagicLand System Teacher",
     "slug": "MagicLand-System-App",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,7 +15,7 @@
       ]
     ],
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -27,12 +27,21 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.konosuba2324.MagicLandSystemApp"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c1dee4b2-64e5-4c60-9c1c-d558e33a2400"
+      }
     }
   }
 }

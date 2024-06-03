@@ -3,7 +3,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase.config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const URL = process.env.EXPO_PUBLIC_API_LINK;
+const URL = "https://magiclandapiv2.somee.com";
 
 const instance = axios.create({
   baseURL: URL,
