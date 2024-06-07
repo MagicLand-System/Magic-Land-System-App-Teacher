@@ -52,7 +52,7 @@ export default function AccountSettingScreen({ navigation }) {
                 setType={hanldeChangeStatus}
                 defaultType={"Huỷ"}
                 editType={"Cập Nhật"}
-                // goback={navigation.goBack}
+            // goback={navigation.goBack}
             />
             <View style={styles.container}>
                 <View style={{ ...styles.flexColumnBetween, paddingVertical: 10, borderBottomWidth: 1, borderColor: "#E5E5E5" }}>
@@ -78,6 +78,24 @@ export default function AccountSettingScreen({ navigation }) {
                     <Text style={styles.boldText}>Địa chỉ</Text>
                     <Text style={[styles.valueText]}>{userData.district}</Text>
                 </View>
+                <TouchableOpacity
+                    style={{
+                        ...styles.flexColumnBetween,
+                        paddingVertical: 10,
+                        borderBottomWidth: 1,
+                        borderColor: "#E5E5E5"
+                    }}
+                    onPress={() => navigation.push("ChangeApiLinkScreen")}
+                >
+
+                    <View style={styles.flexColumn}>
+                        <Icon name={"link-variant"} color={"black"} size={30} />
+                        <Text style={{ ...styles.boldText, marginHorizontal: 10 }}>
+                            Đường dẫn
+                        </Text>
+                    </View>
+                    <Icon name={"chevron-right"} color={"black"} size={30} />
+                </TouchableOpacity>
             </View>
         </>
     )

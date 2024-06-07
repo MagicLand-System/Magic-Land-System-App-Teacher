@@ -11,6 +11,7 @@ import StartedScreen from '../screens/StartedScreen';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import FillInfoScreen from '../screens/FillInfoScreen';
+import ChangeApiLinkScreen from '../screens/ChangeApiLinkScreen';
 
 import HomeScreen from '../screens/bottomTab/teacher/HomeScreen';
 import WorkScheduleScreen from '../screens/bottomTab/teacher/WorkScheduleScreen';
@@ -80,6 +81,7 @@ const StackNavigator = () => {
                     <Stack.Screen name="ExamHistoryScreen" component={ExamHistoryScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="NofiticationScreen" component={NofiticationScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="AccountSettingScreen" component={AccountSettingScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="ChangeApiLinkScreen" component={ChangeApiLinkScreen} options={{ headerShown: false }} />
                 </>
 
             ) : (
