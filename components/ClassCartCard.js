@@ -1,7 +1,7 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
 import React, { useContext } from 'react'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { convertSchedulesToString, formatDate, formatPrice, getVnDay, shortedTime } from '../util/util';
+import { convertSchedulesToString, formatDate, formatPrice, getVnDay, shortedTime, transformString } from '../util/util';
 import defaultImage from "../assets/classCard/classicMath.png"
 import { courseSelector } from '../store/selector';
 import { useSelector } from 'react-redux';
@@ -78,7 +78,7 @@ export default function ClassCartCard({ cardDetail, check, index, onClick, backg
                             <Text style={{ ...styles.cardName, color: "#241468", fontSize: 10 }}>{cardDetail?.coursePrice ? formatPrice(cardDetail?.coursePrice) : formatPrice(0)}đ</Text>
                         }
                     </View>
-                    <Text style={{ fontSize: 10, color: "#4F4F4F", marginVertical: 5 }}>Lớp: {cardDetail?.classCode} - <Text style={{ fontSize: 12, color: "#4F4F4F", textTransform: "capitalize" }}>{cardDetail?.method}</Text></Text>
+                    <Text style={{ fontSize: 10, color: "#4F4F4F", marginVertical: 5 }}>Lớp: {cardDetail?.className} - <Text style={{ fontSize: 12, color: "#4F4F4F", textTransform: "capitalize" }}>{cardDetail?.method}</Text></Text>
                     <View style={styles.flexColumn}>
                         <Icon name={"calendar-check"} color={"#241468"} size={15} />
                         <Text style={styles.cardDetailText}>{formatDate(time)}</Text>
@@ -94,7 +94,7 @@ export default function ClassCartCard({ cardDetail, check, index, onClick, backg
                                         convertSchedulesToString(cardDetail?.schedules)?.map((item, key) => {
                                             return (
                                                 <React.Fragment key={key}>
-                                                    <Text style={styles.cardDetailText}>Thứ {item?.dates}</Text>
+                                                    <Text style={styles.cardDetailText}>Thứ {transformString(item?.dates)}</Text>
                                                     <Text style={styles.cardDetailText}> ({item?.time})</Text>
                                                 </React.Fragment>
 

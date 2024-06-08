@@ -34,34 +34,10 @@ export default function ProfileScreen({ navigation }) {
 
   const optionList = [
     {
-      name: "Danh sách bé",
-      icon: <Icon name={"account-group"} color={"black"} size={30} />,
-      role: ["PARENT"],
-      onClick: () => navigation.push("StudentListScreen"),
-    },
-    {
-      name: "Khóa học đăng ký",
-      icon: <Icon name={"file-document"} color={"black"} size={30} />,
-      role: ["PARENT"],
-      onClick: () => console.log("comming soon"),
-    },
-    {
-      name: "Khóa học quan tâm",
-      icon: <Icon name={"file-star"} color={"black"} size={30} />,
-      role: ["PARENT"],
-      onClick: () => console.log("comming soon"),
-    },
-    {
-      name: "Ví điện tử",
-      icon: <Icon name={"wallet"} color={"black"} size={30} />,
-      role: ["PARENT"],
-      onClick: () => console.log("comming soon"),
-    },
-    {
-      name: "Lịch sử giao dịch",
+      name: "Danh Sách lớp học",
       icon: <Icon name={"timer-sand-full"} color={"black"} size={30} />,
-      role: ["PARENT"],
-      onClick: () => navigation.push("TransactionHistoryScreen"),
+      role: ["LECTURER"],
+      onClick: () => navigation.push("ClassListScreen"),
     },
     {
       name: "Đăng xuất",

@@ -99,7 +99,7 @@ export function obfuscateEmail(email) {
     const [username, domain] = email.split('@');
     // Obfuscate the username
     const obfuscatedUsername = username.length > 2
-        ? username[0] + username[1]  + '*'.repeat(username.length - 3) + username.slice(-1)
+        ? username[0] + username[1] + '*'.repeat(username.length - 3) + username.slice(-1)
         : username + '*';
 
     // Return the obfuscated email
@@ -235,4 +235,25 @@ export function getNotificateLength(notificateList) {
     return notificateList.filter(item => item?.isRead === false).length;
 }
 
+export function transformString(input) {
+    if (input.includes("Sunday")) {
+        // Replace 'Sunday' with 'CN'
+        let result = input.replace("Sunday", "CN");
 
+        // If the input starts with 'Sunday-', move 'CN-' to the end
+        if (input.startsWith("Sunday-")) {
+            result = result.replace("CN-", ""); // Remove 'CN-' from the start
+            result += "-CN"; // Add 'CN' to the end
+        }
+
+        return result;
+    } else if (input.startsWith("CN-")) {
+        // If the input starts with 'CN-', move 'CN-' to the end
+        let result = input.replace("CN-", ""); // Remove 'CN-' from the start
+        result += "-CN"; // Add 'CN' to the end
+        return result;
+    } else {
+        // If 'Sunday' is not in the string and does not start with 'CN-', return the input as it is
+        return input;
+    }
+}

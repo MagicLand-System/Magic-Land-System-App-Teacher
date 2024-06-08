@@ -64,12 +64,12 @@ export default function TeacherCourseSyllabus({ route, navigation }) {
 
     const handleAttendance = (item) => {
         console.log(item);
-        // navigation.push("AttendanceScreen", { classDetail: courseItem, date: item?.date, slot: item?.slotOrder })
+        navigation.push("AttendanceScreen", { classDetail: courseItem, date: item?.date, slot: item?.orderSession })
     }
 
     const handleRate = (item) => {
-        console.log(item);
-        // navigation.push("RateStudentScreen", { classDetail: courseItem, date: item?.date, slot: item?.slotOrder })
+        // console.log(item?.orderSession);
+        navigation.push("RateStudentScreen", { classDetail: courseItem, date: item?.date, noSession: item?.orderSession })
     }
 
     const onRefresh = async () => {

@@ -74,6 +74,7 @@ export default function WorkScheduleScreen({ navigation }) {
     // navigation.push("TeacherCourseSyllabus", { classId: classDetail?.classId, date: dateSelected, slot: classDetail?.slot?.slotOrder })
     navigation.push("TeacherCourseSyllabus", { courseDetail: classDetail })
     // console.log(classDetail);
+
   }
 
   const getCurrentDate = (date) => {
@@ -204,7 +205,7 @@ export default function WorkScheduleScreen({ navigation }) {
                   <TouchableOpacity style={{
                     ...styles.item,
                     backgroundColor: colorList[item?.index % colorList?.length]
-                  }} onPress={() => { setDateSelected(item?.date); setCalendarType("day"); handleClassNavigate(item) }}>
+                  }} onPress={() => { handleClassNavigate(item); setDateSelected(item?.date); setCalendarType("day"); }}>
                     <Text style={{ ...styles.boldText }}>{shortedTime(item?.slot?.startTime)} - {shortedTime(item?.slot?.endTime)}</Text>
                     <Text style={{ ...styles.boldText }}>{item?.className} - <Text style={{ textTransform: "capitalize" }}> {item?.method} </Text> {renderAttendanceStatus(item?.attendanceStatus)} </Text>
                     <Text style={{ ...styles.itemText }}>Phòng {item?.room?.name ? item.room.name : 'N/A'} - Lầu {item?.room?.floor ? item.room.floor : 'N/A'}</Text>

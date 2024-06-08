@@ -20,6 +20,16 @@ export const getClassByClassId = async (classID) => {
     }
 };
 
+export const getClassList = async () => {
+    try {
+        const response = await api.get(`/api/v1/lectures/classes/all`);
+        return response;
+    } catch (error) {
+        console.log("getClassList in api/class.js error : ", error);
+        return error;
+    }
+};
+
 export const getClassByCourseId = async (courseID) => {
     try {
         const response = await api.get(`/api/v1/classes/course/${courseID}`);

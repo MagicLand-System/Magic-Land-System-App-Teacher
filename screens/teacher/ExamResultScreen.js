@@ -65,6 +65,7 @@ export default function ExamResultScreen({ route, navigation }) {
 
     const loadStudentData = async () => {
         const response = await getExamResult({ classId: classDetail.classId, examIdList: [quizData?.examId] })
+        console.log(classDetail.classId, quizData?.examId);
         if (response?.status === 200) {
             const data = response?.data?.map((item) => {
                 return {
@@ -151,7 +152,6 @@ export default function ExamResultScreen({ route, navigation }) {
     }
 
     const handlePressOnStudent = (student) => {
-
         const studentIndex = studentList?.findIndex(obj => obj?.studentId === student?.studentId)
         setFocusStudentIndex(studentIndex)
 

@@ -3,9 +3,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../components/header/Header';
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-import unhappyIcon from "../../assets/rateIcon/unhapppyIcon.png"
-import happyIcon from "../../assets/rateIcon/happyIcon.png"
-import ContentedIcon from "../../assets/rateIcon/ContentedIcon.png"
 import { getAttendanceList, getAttendanceListByDate, takeAttendance } from '../../api/teacher';
 import { checkCurrentDate } from '../../util/util';
 import { TimeContext } from '../../context/TimeContext';
@@ -61,6 +58,7 @@ export default function AttendanceScreen({ route, navigation }) {
 
     }
 
+    // điểm danh
     const handleCompleteAttend = async () => {
         const response = await takeAttendance(classDetail?.classId, convertNullToFalse(studentTmpList), String(slot).replace(/\s/g, ''))
         console.log(classDetail?.classId, studentTmpList, String(slot).replace(/\s/g, ''));
@@ -73,6 +71,7 @@ export default function AttendanceScreen({ route, navigation }) {
         }
     }
 
+    // huỷ
     const handleClearAttend = () => {
         setStudentTmpList(JSON.parse(JSON.stringify(studentList)))
         setEdittingMode(false)

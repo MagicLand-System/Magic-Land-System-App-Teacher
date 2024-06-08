@@ -24,6 +24,7 @@ import ExamResultScreen from '../screens/teacher/ExamResultScreen';
 import ExamHistoryScreen from '../screens/teacher/ExamHistoryScreen';
 import NofiticationScreen from '../screens/teacher/NofiticationScreen';
 import AccountSettingScreen from '../screens/teacher/AccountSettingScreen';
+import ClassListScreen from '../screens/teacher/ClassListScreen';
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
@@ -82,6 +83,7 @@ const StackNavigator = () => {
                     <Stack.Screen name="NofiticationScreen" component={NofiticationScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="AccountSettingScreen" component={AccountSettingScreen} options={{ headerShown: false }} />
                     <Stack.Screen name="ChangeApiLinkScreen" component={ChangeApiLinkScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="ClassListScreen" component={ClassListScreen} options={{ headerShown: false }} />
                 </>
 
             ) : (

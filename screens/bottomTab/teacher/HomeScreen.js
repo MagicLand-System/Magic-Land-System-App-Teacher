@@ -160,11 +160,12 @@ export default function HomeScreen({ navigation }) {
             </View>
           }
         </View>
+        <View style={styles.titleView}>
+          <Text style={styles.title}>Lớp học tiếp theo:</Text>
+        </View>
         {
-          classList[0] &&
-          <View style={styles.titleView}>
-            <Text style={styles.title}>Lớp học tiếp theo:</Text>
-          </View>
+          !classList[0] &&
+          <Text style={{ ...styles.boldText, textAlign: "center", fontSize: 18 }}> Không có lịch dạy </Text>
         }
         <ScrollView style={styles.classList} nestedScrollEnabled={true}>
           {
@@ -182,9 +183,13 @@ export default function HomeScreen({ navigation }) {
             ))
           }
         </ScrollView>
-        <View style={styles.titleView}>
-          <Text style={styles.title}>Thông báo:</Text>
-        </View>
+        {
+          notificate[0] &&
+          <View style={styles.titleView}>
+            <Text style={styles.title}>Thông báo:</Text>
+          </View>
+        }
+
         <ScrollView style={styles.noficationList} nestedScrollEnabled={true}>
           {
             notificate?.slice(0, 2) && notificate?.slice(0, 2)?.map((item, key) => (
@@ -193,6 +198,7 @@ export default function HomeScreen({ navigation }) {
           }
         </ScrollView>
       </ScrollView>
+
     </View >
   )
 }
